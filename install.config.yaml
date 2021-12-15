@@ -3,6 +3,9 @@
       relink: true
 
 - clean: ['~']
+- create: 
+  - ~/.config
+  - ~/.config/nvim
 
 - link:
     ~/.zshrc: .zshrc
