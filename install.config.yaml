@@ -24,6 +24,7 @@
 - shell:
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
   - [brew install antibody, installing ng antibody ]
+  - [brew install lolcat, installing lolcat]
   - [brew install node]
   - [brew install zsh]
   - [git submodule update --init --recursive, Installing submodules]
