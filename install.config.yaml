@@ -24,6 +24,7 @@
 - shell:
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
   - [brew install antibody, installing ng antibody ]
+  - [python3 -m pip install --user --upgrade pynvim, adding vim python plugin]
   - [brew install lolcat, installing lolcat]
   - [brew install python3]
   - [brew install node]

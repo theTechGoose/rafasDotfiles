@@ -42,8 +42,6 @@ compinit
     antibody bundle robbyrussell/oh-my-zsh path:plugins/npm
     antibody bundle robbyrussell/oh-my-zsh path:plugins/pass
     antibody bundle robbyrussell/oh-my-zsh path:plugins/rsync
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/tmux
-    antibody bundle robbyrussell/oh-my-zsh path:plugins/tmuxinator
     antibody bundle robbyrussell/oh-my-zsh path:plugins/z
     antibody bundle robbyrussell/oh-my-zsh path:plugins/fzf
 
@@ -242,3 +240,5 @@ rll
 # vim: set nospell foldmethod=marker foldlevel=0:
 #
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
