@@ -23,6 +23,7 @@
 
 - shell:
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
+  - [brew install antibody, installing ng antibody ]
   - [brew install node]
   - [brew install zsh]
   - [git submodule update --init --recursive, Installing submodules]
@@ -43,4 +44,3 @@
   - [brew install yabai --HEAD, installing yabai]
   - [sudo yabai --install-sa]
   - [ln -s ~/limelight /usr/local/bin/limelight, linking limelight]
-  - [brew install antibody, installing ng antibody ]
