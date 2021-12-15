@@ -22,7 +22,7 @@
     ~/.config/kitty: kitty.conf
 
 - shell:
-  - [/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\", Installing brew]
+  - [/bin/bash -c \"'$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)'\", Installing brew]
   - [brew install node]
   - [brew install zsh]
   - [git submodule update --init --recursive, Installing submodules]
