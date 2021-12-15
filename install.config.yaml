@@ -1,0 +1,38 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.zshrc: .zshrc
+    ~/Library/Fonts/PragmataPro Mono Liga Bold Nerd Font.ttf: PragmataPro Liga Bold Nerd Font.ttf
+    ~/.config/nvim/init.vim: init.vim
+    ~/.config/nvim/plugins: plugins
+    ~/scripts: scripts
+    ~/.limelightrc: .limelightrc
+    ~/.p10k.zsh: .p10k.zsh
+    ~/.skhdrc: skhdrc
+    ~/.yabairc: .yabairc
+    ~/.zshrc: .zshrc
+    ~/limelight: limelight
+
+- shell:
+  - [/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\", Installing brew]
+  - [brew install node]
+  - [brew install zsh]
+  - [git submodule update --init --recursive, Installing submodules]
+  - [ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim]
+  - [sh -c \"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)\", installing oh-my-zsh]
+  - [upgrade_oh_my_zsh, upgrading zsh]
+  - [git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k, installing p10k]
+  - [curl -L git.io/antigen > antigen.zsh, installing antigen]
+  - [brew install jesseduffield/lazygit/lazygit, installing lazygit]
+  - [brew install ripgrep, intalling ripgrep]
+  - [brew install the_silver_searcher, installing ag]
+  - [brew install fzf, installing fzf ]
+  - [(brew --prefix)/opt/fzf/install, installing fzf options]
+  - [brew install neovim --HEAD, install neovim]
+  - [brew install yabai --HEAD, installing yabai]
+  - [sudo yabai --install-sa]
+  - [ln -s ~/limelight /usr/local/bin/limelight, linking limelight]
