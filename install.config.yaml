@@ -15,7 +15,7 @@
     ~/scripts: scripts
     ~/.limelightrc: .limelightrc
     ~/.p10k.zsh: .p10k.zsh
-    ~/.skhdrc: skhdrc
+    ~/.skhdrc: .skhdrc
     ~/.yabairc: .yabairc
     ~/.zshrc: .zshrc
     ~/limelight: limelight
@@ -35,7 +35,7 @@
   - [brew install ripgrep, intalling ripgrep]
   - [brew install the_silver_searcher, installing ag]
   - [brew install fzf, installing fzf ]
-  - [(brew --prefix)/opt/fzf/install, installing fzf options]
+  - [$(brew --prefix)/opt/fzf/install, installing fzf options]
   - [brew install neovim --HEAD, install neovim]
   - [brew install yabai --HEAD, installing yabai]
   - [sudo yabai --install-sa]
