@@ -22,6 +22,9 @@
     ~/.config/kitty/kitty.conf: 
       path: kitty.conf
       force: true
+    ~/.skhdrc: .skhdrc
+    ~/.config/limelight.js: limelight.js
+
 
 - shell:
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
