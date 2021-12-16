@@ -46,7 +46,7 @@ set backupdir=~/.local/share/nvim/backup//
 set updatetime=300 " Reduce time for highlighting other references
 set redrawtime=10000 " Allow more time for loading syntax on large files
 set conceallevel=1 " show vim-typescript 'ligatures' (return, null, function etc..)
-set timeoutlen=150
+set timeoutlen=250
 set wildcharm=<tab> "set to trigger auto complete in buffer script
 
 "--------------------------------------------------------------------------
@@ -76,8 +76,7 @@ vnoremap > >gv
 vnoremap y myy`y
 vnoremap Y myY`y
 
-" Open html in chrome
-nnoremap <leader>c :exe '!open -a /Applications/Google\ Chrome.app %'<CR>
+" 
 
 " When text is wrapped, move by terminal rows, not lines, unless a count is provided
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -128,14 +127,19 @@ map gp :bprevious<cr>
 " remap save
 nnoremap <leader>w :wa<CR>
 " Hardmode
-inoremap <bs> <nop>
-nnoremap j <nop>
-nnoremap k <nop>
-nnoremap l <nop>
-nnoremap h <nop>
+" inoremap <bs> <nop>
+" nnoremap j <nop>
+" nnoremap k <nop>
+" nnoremap l <nop>
+" nnoremap h <nop>
 
 " see numbers
 "nnoremap <leader>sn :exe "set relativenumber!<CR> | sleep 1000m | set relativenumber!<CR >"
+
+map <leader>ss S
+map <leader>sf F
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
 
 
 

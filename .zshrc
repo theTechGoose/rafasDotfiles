@@ -152,7 +152,7 @@ compinit
     # Open vim with z argument
     v() {
       if [ -n "$1" ]; then
-        z $1
+          z $1
       fi
 
       nvim
@@ -167,12 +167,13 @@ sw() {
       wd=$(pwd)
       cd
       cd .config
+      echo $( pwd )
       query=$(rg --files -g '!*coc*' | fzf --layout=reverse)
-      if  [[ -n "${query// /}" ]]; then
-        nvim $query
-      fi
-      cd
-      cd $wd
+      # if  [[ -n "${query// /}" ]]; then
+      #   nvim $query
+      # fi
+      # cd
+      # cd $wd
     }
     # Open zshconfig
     zconf() {
