@@ -57,3 +57,4 @@
   - [brew install yabai --HEAD, installing yabai]
   - [sudo yabai --install-sa]
   - [ln -s ~/limelight /usr/local/bin/limelight, linking limelight]
+  - [p10k configure, configuring p10k]
