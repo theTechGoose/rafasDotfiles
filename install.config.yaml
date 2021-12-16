@@ -29,6 +29,8 @@
 - shell:
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
   - [brew install antibody, installing ng antibody ]
+  - [brew install koekeishiya/formulae/skhd, installing skhd]
+  - [brew services start skhd, starting skhd]
   - [brew install kitty]
   - [python3 -m pip install --user --upgrade pynvim, adding vim python plugin]
   - [brew install yarn]
