@@ -1,3 +1,5 @@
+~/scripts/login.zsh
+#
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -173,14 +175,14 @@ sw() {
     conf() {
       wd=$(pwd)
       cd
-      cd .config
+      cd Documents/infrastructure/rafasDotfiles
       echo $( pwd )
       query=$(rg --files -g '!*coc*' | fzf --layout=reverse)
-      # if  [[ -n "${query// /}" ]]; then
-      #   nvim $query
-      # fi
-      # cd
-      # cd $wd
+      if  [[ -n "${query// /}" ]]; then
+        nvim $query
+      fi
+      cd
+      cd $wd
     }
     # Open zshconfig
     zconf() {
@@ -198,11 +200,29 @@ od() {
 
     # Open with vim
     o() {
-      query=$(rg --files -g '!*node_modules' -g '!*Library' -g '!*Pictures' | fzf --layout=reverse)
-      if  [[ -n "${query// /}" ]]; then
-          nvim $query
+    wd=$(pwd)
+    cd
+    cd Documents/programming
+
+      testQuery=$(ls | fzf)
+      if  [[ -n "${testQuery// /}" ]]; then
+          cd $testQuery
+          query=$(find . -name package.json ! -path '*/node_modules/*' )
+          # nvim $query +NERDTreeToggle
+          openVim
       fi
+      cd
+      cd $wd
     }
+
+openVim() {
+    query=$(find . -name package.json ! -path '*/node_modules/*' )
+    if  [[ -n "${query// /}" ]]; then
+        nvim $query +NERDTreeToggle
+    else
+        echo 'No package.json found'
+    fi
+}
 
     # Open with no bells and whistles (for performance)
     ob() {
@@ -228,6 +248,10 @@ od() {
 
 
     rll() {
+        pkill node
+        brew services restart yabai
+        sudo yabai --install-sa
+        sudo yabai --load-sa
         ( node ./.config/limelight.js&>/dev/null &)
     }
 
@@ -236,12 +260,11 @@ od() {
 # Interactive shell startup scripts {{{
 # ==============================================================================
 
-rll
 
+rll
     # if [[ $- == *i* && $0 == '/bin/zsh' ]]; then
     # fi
     
-    ~/scripts/login.zsh
 
 # }}}
 
@@ -254,3 +277,6 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+
