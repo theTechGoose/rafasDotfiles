@@ -1,22 +1,22 @@
 const { execSync } = require("child_process");
 
 function main() {
-    const { argv } = process;
-    const [, , ...args] = argv;
-    if (args[0]) {
-        execSync("brew services restart yabai");
-        executeLimelight();
-    } else {
-        executeLimelight();
+    executeLimelight()
+}
+
+async function executeLimelight() {
+    execSync(`killall limelight &> /dev/null
+limelight &> /dev/null &`)
+    await sleep(5000)
+    try {
+        execSync("limelight");
+    } catch(err) {
+        main();
     }
 }
 
-function executeLimelight() {
-    try {
-        execSync("limelight");
-    } catch {
-        main();
-    }
+function sleep(ms) {
+    return new Promise( (r)=> setTimeout(r,ms))
 }
 
 main();
