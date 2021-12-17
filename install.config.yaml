@@ -23,6 +23,7 @@
       path: kitty.conf
       force: true
     ~/.skhdrc: .skhdrc
+    ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.config/limelight.js: limelight.js
 
 
