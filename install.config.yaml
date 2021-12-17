@@ -9,7 +9,7 @@
 
 - link:
     ~/.zshrc: .zshrc
-    ~/Library/Fonts/PragmataPro Mono Liga Bold Nerd Font.ttf: PragmataPro Liga Bold Nerd Font.ttf
+    ~/Library/Fonts/PragmataPro Mono Liga Bold Nerd Font.ttf: PragmataPro Mono Liga Bold Nerd Font.ttf
     ~/.config/nvim/init.vim: init.vim
     ~/.config/nvim/plugins: plugins
     ~/scripts: scripts
