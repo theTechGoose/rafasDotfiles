@@ -33,11 +33,11 @@ set nowrap
 set list
 set listchars=tab:▸\ ,trail:·
 set mouse=a
-set scrolloff=8
+set scrolloff=15
 set sidescrolloff=8
 set nojoinspaces
 set splitright
-set clipboard=unnamedplus
+set clipboard=unnamed
 set confirm
 set cursorline
 set exrc
@@ -48,6 +48,9 @@ set redrawtime=10000 " Allow more time for loading syntax on large files
 set conceallevel=1 " show vim-typescript 'ligatures' (return, null, function etc..)
 set timeoutlen=250
 set wildcharm=<tab> "set to trigger auto complete in buffer script
+let g:netrw_liststyle=3 " these next two lines make it so a directory can be opened with nerdtree
+let g:netrw_keepdir=0
+let g:NERDTreeChDirMode=2
 
 "--------------------------------------------------------------------------
 " Key maps
@@ -84,6 +87,7 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Paste replace visual selection without copying it
 vnoremap <leader>p "_dP
+
 
 " Make Y behave like the other capitals
 nnoremap Y y$
@@ -136,10 +140,19 @@ nnoremap <leader>w :wa<CR>
 " see numbers
 "nnoremap <leader>sn :exe "set relativenumber!<CR> | sleep 1000m | set relativenumber!<CR >"
 
-map <leader>ss S
-map <leader>sf F
+" single char sneak, multiline f
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
+
+" add a console.log with debug statements
+nnoremap <leader>sp :call print_debug#print_debug()<cr>
+
+" quit all 
+nnoremap <leader>sq :wqall!<cr>
+
+"quit window
+nnoremap <leader>swq <C-w>q
+
 
 
 
@@ -166,8 +179,6 @@ source ~/.config/nvim/plugins/commentary.vim
 source ~/.config/nvim/plugins/context-commentstring.vim
 source ~/.config/nvim/plugins/dispatch.vim
 source ~/.config/nvim/plugins/paleNight.vim
-"source ~/.config/nvim/plugins/dracula.vim
-
 source ~/.config/nvim/plugins/editorconfig.vim
 source ~/.config/nvim/plugins/ulTest.vim " deprecate
 source ~/.config/nvim/plugins/eunuch.vim
@@ -213,6 +224,7 @@ source ~/.config/nvim/plugins/vim-xtract.vim
 source ~/.config/nvim/plugins/vim-noItalics.vim
 source ~/.config/nvim/plugins/setup-workspace.vim
 source ~/.config/nvim/plugins/vimspector
+source ~/.config/nvim/plugins/print-debug.vim
 call plug#end()
 doautocmd User PlugLoaded
 
