@@ -25,6 +25,7 @@
     ~/.skhdrc: .skhdrc
     ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.config/limelight.js: limelight.js
+    ~/.config/coc/ultisnips: ultisnips
 
 
 - shell:
