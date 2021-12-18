@@ -230,6 +230,8 @@ call plug#begin(data_dir . '/plugins')
  source ~/.config/nvim/plugins/setup-workspace.vim
  source ~/.config/nvim/plugins/vimspector
  source ~/.config/nvim/plugins/print-debug.vim
+source ~/.config/nvim/plugins/search-highlight.vim
+source ~/.config/nvim/plugins/vim-be-good.vim
 call plug#end()
 doautocmd User PlugLoaded
 
