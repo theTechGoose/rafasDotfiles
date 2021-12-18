@@ -170,61 +170,61 @@ autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin(data_dir . '/plugins')
-source ~/.config/nvim/plugins/airline.vim
-source ~/.config/nvim/plugins/sneak.vim
-source ~/.config/nvim/plugins/vim-shoot.vim
-source ~/.config/nvim/plugins/arduino.vim
-source ~/.config/nvim/plugins/coc.vim
-source ~/.config/nvim/plugins/commentary.vim
-source ~/.config/nvim/plugins/context-commentstring.vim
-source ~/.config/nvim/plugins/dispatch.vim
-source ~/.config/nvim/plugins/paleNight.vim
-source ~/.config/nvim/plugins/editorconfig.vim
-source ~/.config/nvim/plugins/ulTest.vim " deprecate
-source ~/.config/nvim/plugins/eunuch.vim
-source ~/.config/nvim/plugins/exchange.vim
-source ~/.config/nvim/plugins/firenvim.vim
-source ~/.config/nvim/plugins/floaterm.vim
-source ~/.config/nvim/plugins/fugitive.vim
-source ~/.config/nvim/plugins/fzf.vim
-source ~/.config/nvim/plugins/heritage.vim
-source ~/.config/nvim/plugins/lastplace.vim
-source ~/.config/nvim/plugins/lion.vim
-source ~/.config/nvim/plugins/markdown-preview.vim
-source ~/.config/nvim/plugins/nerdtree.vim
-source ~/.config/nvim/plugins/pasta.vim
-source ~/.config/nvim/plugins/peekaboo.vim
-source ~/.config/nvim/plugins/phpactor.vim
-source ~/.config/nvim/plugins/polyglot.vim
-source ~/.config/nvim/plugins/projectionist.vim
-source ~/.config/nvim/plugins/quickscope.vim
-source ~/.config/nvim/plugins/repeat.vim
-source ~/.config/nvim/plugins/rooter.vim
-source ~/.config/nvim/plugins/sayonara.vim
-source ~/.config/nvim/plugins/smooth-scroll.vim
-source ~/.config/nvim/plugins/splitjoin.vim
-source ~/.config/nvim/plugins/surround.vim
-source ~/.config/nvim/plugins/targets.vim
-source ~/.config/nvim/plugins/textobj-xmlattr.vim
-source ~/.config/nvim/plugins/unimpaired.vim
-source ~/.config/nvim/plugins/vim-test.vim
-source ~/.config/nvim/plugins/visual-multi.vim
-source ~/.config/nvim/plugins/visual-star-search.vim
-source ~/.config/nvim/plugins/which-key.vim
-source ~/.config/nvim/plugins/vim-typescript
-source ~/.config/nvim/plugins/vim-signature
-source ~/.config/nvim/plugins/vim-prettier
-source ~/.config/nvim/plugins/vim-copilot
-source ~/.config/nvim/plugins/bad-practices.vim
-source ~/.config/nvim/plugins/nvim-treesitter.vim
-source ~/.config/nvim/plugins/nvim-notify.vim
-source ~/.config/nvim/plugins/vim-closetag.vim
-source ~/.config/nvim/plugins/vim-escCaps.vim
-source ~/.config/nvim/plugins/vim-xtract.vim
-source ~/.config/nvim/plugins/vim-noItalics.vim
-source ~/.config/nvim/plugins/setup-workspace.vim
-source ~/.config/nvim/plugins/vimspector
-source ~/.config/nvim/plugins/print-debug.vim
+ source ~/.config/nvim/plugins/airline.vim
+ source ~/.config/nvim/plugins/sneak.vim
+ source ~/.config/nvim/plugins/vim-shoot.vim
+ source ~/.config/nvim/plugins/arduino.vim
+ source ~/.config/nvim/plugins/coc.vim
+ source ~/.config/nvim/plugins/commentary.vim
+ source ~/.config/nvim/plugins/context-commentstring.vim
+ source ~/.config/nvim/plugins/dispatch.vim
+ source ~/.config/nvim/plugins/paleNight.vim
+ source ~/.config/nvim/plugins/editorconfig.vim
+ source ~/.config/nvim/plugins/ulTest.vim " deprecate
+ source ~/.config/nvim/plugins/eunuch.vim
+ source ~/.config/nvim/plugins/exchange.vim
+ source ~/.config/nvim/plugins/firenvim.vim
+ source ~/.config/nvim/plugins/floaterm.vim
+ source ~/.config/nvim/plugins/fugitive.vim
+ source ~/.config/nvim/plugins/fzf.vim
+ source ~/.config/nvim/plugins/heritage.vim
+ source ~/.config/nvim/plugins/lastplace.vim
+ source ~/.config/nvim/plugins/lion.vim
+ source ~/.config/nvim/plugins/markdown-preview.vim
+ source ~/.config/nvim/plugins/nerdtree.vim
+ source ~/.config/nvim/plugins/pasta.vim
+ source ~/.config/nvim/plugins/peekaboo.vim
+ source ~/.config/nvim/plugins/phpactor.vim
+ source ~/.config/nvim/plugins/polyglot.vim
+ source ~/.config/nvim/plugins/projectionist.vim
+ source ~/.config/nvim/plugins/quickscope.vim
+ source ~/.config/nvim/plugins/repeat.vim
+ source ~/.config/nvim/plugins/rooter.vim
+ source ~/.config/nvim/plugins/sayonara.vim
+ source ~/.config/nvim/plugins/smooth-scroll.vim
+ source ~/.config/nvim/plugins/splitjoin.vim
+ source ~/.config/nvim/plugins/surround.vim
+ source ~/.config/nvim/plugins/targets.vim
+ source ~/.config/nvim/plugins/textobj-xmlattr.vim
+ source ~/.config/nvim/plugins/unimpaired.vim
+ source ~/.config/nvim/plugins/vim-test.vim
+ source ~/.config/nvim/plugins/visual-multi.vim
+ source ~/.config/nvim/plugins/visual-star-search.vim
+ source ~/.config/nvim/plugins/which-key.vim
+ source ~/.config/nvim/plugins/vim-typescript
+ source ~/.config/nvim/plugins/vim-signature
+ source ~/.config/nvim/plugins/vim-prettier
+ source ~/.config/nvim/plugins/vim-copilot
+ source ~/.config/nvim/plugins/bad-practices.vim
+ source ~/.config/nvim/plugins/nvim-treesitter.vim
+ source ~/.config/nvim/plugins/nvim-notify.vim
+ source ~/.config/nvim/plugins/vim-closetag.vim
+ source ~/.config/nvim/plugins/vim-escCaps.vim
+ source ~/.config/nvim/plugins/vim-xtract.vim
+ source ~/.config/nvim/plugins/vim-noItalics.vim
+ source ~/.config/nvim/plugins/setup-workspace.vim
+ source ~/.config/nvim/plugins/vimspector
+ source ~/.config/nvim/plugins/print-debug.vim
 call plug#end()
 doautocmd User PlugLoaded
 

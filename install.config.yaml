@@ -6,6 +6,8 @@
 - create: 
   - ~/.config
   - ~/.config/nvim
+  - ~/.local
+  - ~/.local/share
 
 - link:
     ~/.zshrc: .zshrc
@@ -26,9 +28,13 @@
     ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.config/limelight.js: limelight.js
     ~/.config/coc/ultisnips: ultisnips
+    ~/.local/share/nvim: 
+      path: nvim
+      force: true
 
 
 - shell:
+  - vim -u NONE -N +'silent! source ./init.vim' +'PlugInstall --sync' +'qall!'
   - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing brew]
   - [brew install antibody, installing ng antibody ]
   - [brew install koekeishiya/formulae/skhd, installing skhd]
@@ -63,3 +69,4 @@
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
   - [echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc]
   - [p10k configure, configuring p10k]
+  - [vim -u NONE -N +'silent! source ./init.vim' +'PlugInstall --sync' +'qall!']
