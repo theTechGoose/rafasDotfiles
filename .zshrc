@@ -249,9 +249,6 @@ openVim() {
 
     rll() {
         pkill node
-        brew services restart yabai
-        sudo yabai --install-sa
-        sudo yabai --load-sa
         ( node ./.config/limelight.js&>/dev/null &)
     }
 
@@ -280,3 +277,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 
+source ~/powerlevel10k/powerlevel10k.zsh-theme
