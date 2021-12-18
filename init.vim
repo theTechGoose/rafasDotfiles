@@ -153,6 +153,11 @@ nnoremap <leader>sq :wqall!<cr>
 "quit window
 nnoremap <leader>swq <C-w>q
 
+" insert mapping for missing keys bug
+inoremap ' '
+inoremap ( (
+inoremap ) )
+
 
 
 
