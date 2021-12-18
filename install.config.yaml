@@ -27,9 +27,8 @@
     ~/.skhdrc: .skhdrc
     ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.config/limelight.js: limelight.js
-    ~/.config/coc/ultisnips: ultisnips
-    ~/.local/share/nvim: 
-      path: nvim
+    ~/.config/coc/ultisnips: 
+      path: ultisnips
       force: true
 
 
