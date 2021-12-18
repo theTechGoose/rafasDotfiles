@@ -1,0 +1,21 @@
+describe("RetriggerFailed", () => {
+  it("Should pick up all documents in request, drop them in pending, and pick them back up again", () => {
+    cy.request(
+      "http://localhost:5001/rumpelstiltskin-8cadf/us-central1/testBed?type=createTestDocs",
+      { size: 10 }
+    ).then((response1) => {
+      cy.wrap(response1.body.res).should("eq", 10);
+      cy.request(
+        "http://localhost:5001/rumpelstiltskin-8cadf/us-central1/testBed?type=getTestDocs",
+        { collectionName: "requests" }
+      ).then((response2) => {
+        cy.wrap(response2.body.res.length).should("eq", 10);
+        cy.request(
+          "http://localhost:5001/rumpelstiltskin-8cadf/us-central1/retriggerFailed"
+        ).then((response3) => {
+          cy.wrap(response3.body.res.length).should("eq", 2);
+        });
+      });
+    });
+  });
+});

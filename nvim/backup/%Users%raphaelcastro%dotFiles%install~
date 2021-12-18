@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+vim -u NONE -N +'silent! source ./init.vim' +'PlugInstall --sync' +'qall!'
+pwd
+ls
+#set -e
+
+#CONFIG="install.config.yaml"
+#DOTBOT_DIR="dotbot"
+
+#DOTBOT_BIN="bin/dotbot"
+#BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+#cd "${BASEDIR}"
+#git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
+#git submodule update --init --recursive "${DOTBOT_DIR}"
+#vim -u NONE -N +'silent! source ./init.vim' +'PlugInstall --sync' +'qall!'
+
+#"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+

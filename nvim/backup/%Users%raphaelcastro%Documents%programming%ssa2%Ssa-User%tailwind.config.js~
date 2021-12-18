@@ -1,0 +1,35 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+// <-- Import End -->
+
+module.exports = {
+	purge: [],
+	darkMode: false, // or 'media' or 'class'
+	theme: {
+		extend: {
+			fontFamily: {
+				sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+			},
+			colors: {
+				primary: {
+					100: '#d5f1d4',
+					200: '#aae3a9',
+					300: '#80d47d',
+					400: '#55c652',
+					500: '#2bb827',
+					600: '#22931f',
+					700: '#1a6e17',
+					800: '#114a10',
+					900: '#092508',
+				},
+				theme: {
+					green: '#2bb827',
+				},
+			},
+		},
+	},
+	variants: {
+		extend: {},
+	},
+	plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms')],
+};

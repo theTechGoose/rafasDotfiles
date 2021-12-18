@@ -1,0 +1,47 @@
+export const a = '';
+// import { useRecoilState, RecoilRoot } from 'recoil';
+// import { mount } from 'enzyme';
+// import { DATRIX_ATOM } from '../Helpers/DatrixAtom';
+// import { Developer } from '../../../../../../todos-assets/Generators/Dev/DevGenerator';
+// import { datrixRequester } from '../Helpers/DatrixRequester';
+
+// <-- Import End -->
+
+// <-- Helper End -->
+
+// function setAtom(_state?: AtomConfig_): any {
+//   const state = _state ? _state : { adjustmentValue: null, atomOrSelector: null };
+//   const { adjustmentValue, atomOrSelector } = state;
+//   let testInfo = {};
+//   console.log(atomOrSelector);
+//   function TestBed() {
+//     const [guestInfo, setGuestInfo] = useRecoilState(atomOrSelector ?? DATRIX_ATOM);
+//     if (adjustmentValue) setGuestInfo(adjustmentValue);
+//     testInfo = guestInfo;
+//     return null;
+//   }
+//   mount(
+//     <RecoilRoot>
+//       <TestBed />
+//     </RecoilRoot>
+//   );
+
+//   return testInfo;
+// }
+
+// interface AtomConfig_ {
+//   adjustmentValue?: any;
+//   atomOrSelector?: any;
+// }
+
+// describe('Datrix Core', () => {
+//   it('Should load without crashing', () => {
+//     const datrix = setAtom({ atomOrSelector: DATRIX_ATOM });
+//     expect(datrix).toBeDefined();
+//   });
+
+//   it('Should pull datrix data from endpoint', () => {
+//     const datrix: Developer = setAtom({ atomOrSelector: datrixRequester });
+//     expect(datrix.description).toBeDefined();
+//   });
+// });

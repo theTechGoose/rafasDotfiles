@@ -1,0 +1,93 @@
+import axios from "axios";
+
+/* <-- Import End --> */
+
+export const QB_CFG = {
+  quickbase: {
+    readUrl: "https://api.quickbase.com/v1/records/query",
+    recordIdField: "3",
+    writeurl: "https://api.quickbase.com/v1/records",
+    table: "bmhvhc72c",
+  },
+};
+
+interface QuickbaseQuery_ {
+  from: string;
+  id: number;
+  select?: Array<number>;
+}
+
+interface AuthorizedQuickbaseQuery_ extends QuickbaseQuery_ {
+  headers: any
+}
+
+interface QuickbaseInstuction_ {
+  to: string,
+  id: number,
+  field: number,
+  value: string
+}
+
+interface AuthorizedQuickbaseInstruction_ extends QuickbaseInstuction_ {
+  headers: any
+}
+
+interface QuickbaseRecord_ {
+  [key: number]: { value: string };
+}
+
+interface QuickbaseResponse_ {
+  data: Array<QuickbaseRecord_>;
+}
+
+/* <-- Variable Definition End --> */
+
+// untestable, requires google secrets manager, however 
+// cannot pass credentials programmatically, must pass through shell
+export async function quickbaseRead({from, id, select, headers}: AuthorizedQuickbaseQuery_) {
+  const {readUrl, body} = createQuickbaseQuery({from, id, select})
+  const res = await execRead({readUrl, body, headers})
+  return res.data as QuickbaseResponse_;
+}
+
+async function execRead({ readUrl, body, headers }) {
+  let res: {data: QuickbaseResponse_};
+  try {
+    res = await axios.post(readUrl, JSON.stringify(body), headers);
+  } catch (err) {
+  }
+  return res
+}
+
+// extracted this so I can test the query is of the correct shape
+export function createQuickbaseQuery({ from, id, select }: QuickbaseQuery_) {
+  const where = `{3.EX.${id}}`;
+  const {quickbase} = QB_CFG;
+  const {readUrl} = quickbase
+  const body = {from, where, select};
+  return {readUrl, body}
+}
+
+export async function quickbaseWrite(
+  {
+    to,
+    id,
+    field,
+    value,
+    headers,
+  }: AuthorizedQuickbaseInstruction_
+) {
+  const {writeurl, body} = createQuickbaseInstruction(id, field, value, to)
+  const res = await axios.post(writeurl, JSON.stringify(body), headers)
+  return res.data;
+}
+
+export function createQuickbaseInstruction(id,field,value,to) {
+  const { writeurl, recordIdField } = QB_CFG.quickbase;
+  const record = { value: id };
+  const change = {};
+  change[recordIdField] = record;
+  change[field] = { value };
+  const body = { to, data: [change] };
+return {writeurl,body}
+}

@@ -1,0 +1,26 @@
+import "./main.css";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {HelloWorld} from 'lib/cjs/index'
+// import * as Pages from "./components/pages";
+// import MonsterLoader from "./components/MonsterLoader";
+
+function Apples() {
+  return (<h1>!!</h1>)
+}
+
+function App() {
+  return (
+    <>
+      <HelloWorld/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Apples />}>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+
+export default App;
+

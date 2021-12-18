@@ -1,0 +1,53 @@
+import {
+  createToken,
+  shortenUrl,
+  removeHttpPrefix
+} from "./CreateLink.LX";
+import { encryptionKey } from "../../../secrets/EncryptionKey";
+import * as Jwt from "jsonwebtoken";
+import * as qb from "../../Shared/Quickbase";
+import {createQuickbaseInstruction,QB_CFG} from "../../Shared/Quickbase";
+
+/* <-- Import End --> */
+
+const CONFIG = {
+  longLink: "https://www.google.com",
+  johnTestId: 61027,
+  webhookTest: "https://webhook.site/2d8965d6-9cc0-44a1-a17d-3254e4aef9a8",
+};
+
+/* <-- Variable Definition End --> */
+
+describe("Create Link", () => {
+  const {longLink, johnTestId} = CONFIG;
+  const {QB_CFG: qb_config} = qb;
+  const { quickbase } = qb_config;
+  const {table} = quickbase
+
+  it("Should create a token and be decodable", async () => {
+    const query = createToken(johnTestId, table, 533, 651);
+    const val = Jwt.verify(query.token, encryptionKey) as any;
+    expect(typeof query.token).toBe("string");
+    expect(val.table).toBe(table);
+  });
+  it("Should take in a long link and provide a shorter link", async () => {
+    const {shortLink} = await shortenUrl(longLink);
+    expect(shortLink.length).toBeLessThan(longLink.length);
+  });
+
+  it('Should remove the http prefix from the short link', async () => {
+    const {shortLink} = await shortenUrl(longLink);
+    const shorterLink = removeHttpPrefix(shortLink)
+    expect(shorterLink).not.toContain('http')
+  })
+
+  it('Should provide the correct shape to quickbase write method', () => {
+    const {quickbase} = QB_CFG
+    const {table: to,recordIdField: field} = quickbase
+    const {johnTestId: id} = CONFIG;
+    const value = 'this is a test value'
+    const result = createQuickbaseInstruction(to, id, field, value)
+    expect(result).toMatchSnapshot()
+  })
+});
+

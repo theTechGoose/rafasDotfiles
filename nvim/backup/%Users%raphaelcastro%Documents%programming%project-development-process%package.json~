@@ -1,0 +1,20 @@
+{
+  "name": "project-development-process",
+  "version": "0.0.0",
+  "description": "FBGM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "archiveEntries": "node ./Scritps/archiveEntries"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryanbMonsterRG/project-development-process.git"
+  },
+  "author": "Bryan N Rafa, Like lucky charms... hoe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryanbMonsterRG/project-development-process/issues"
+  },
+  "homepage": "https://github.com/bryanbMonsterRG/project-development-process#readme"
+}

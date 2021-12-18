@@ -1,0 +1,16 @@
+import { useState } from 'react'
+import { ReactComponent as MonsterLine } from '../../../../../assets/MonsterRG_Logo_Line.svg'
+import './styles.scss'
+
+export default function MonsterFull() {
+	const [isHeight] = useState(window.innerHeight < window.innerWidth ? true : false)
+	return (
+		<div className='monster-loading'>
+			<MonsterLine
+				className='monster-loading__line'
+				width={!isHeight ? window.innerWidth / 2 : undefined}
+				height={isHeight ? window.innerHeight / 2 : undefined}
+			/>
+		</div>
+	)
+}

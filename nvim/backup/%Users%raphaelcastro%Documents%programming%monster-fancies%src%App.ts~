@@ -1,0 +1,40 @@
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import * as Pages from './components/pages';
+import MonsterLoader from './components/MonsterLoader';
+
+function App() {
+	return (
+		<div className='App'>
+			<Routes>
+				<Route
+					exact
+					path='/'
+					element={
+						<MonsterLoader>
+							<Pages.Animations />
+						</MonsterLoader>
+					}
+				/>
+				<Route
+					path='/animations'
+					element={
+						<MonsterLoader>
+							<Pages.Animations isNotAsync={true} />
+						</MonsterLoader>
+					}
+				/>
+				<Route
+					path='/loader'
+					element={
+						<MonsterLoader>
+							<Pages.Landing />
+						</MonsterLoader>
+					}
+				/>
+			</Routes>
+		</div>
+	);
+}
+
+export default App;

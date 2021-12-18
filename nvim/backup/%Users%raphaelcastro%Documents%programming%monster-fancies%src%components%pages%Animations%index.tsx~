@@ -1,0 +1,79 @@
+import { useState } from 'react';
+
+import { ReactComponent as MonsterLine } from '../../../assets/MonsterRG_Logo_Line.svg';
+import './styles.scss';
+
+export default function Animations() {
+	const [strokeColor, setLineColor] = useState('#2bb827');
+	const [strokeWidth, setStrokeWidth] = useState(3);
+	const [animationDuration, setAnimationDuration] = useState(3);
+	// TODO: make tool that will allow other devs to customize animation properties with simple forms
+	// ^ include instructions for animation install
+	// ^ Will create copy and pasteable code (copy to clipboard button) with options
+
+	// TODO: Make animation css properties a component prop
+	// TODO: Make inputs for animation properties
+	// TODO: LAST - Refactor animation component
+	// TODO: LAST - Optimization considerations?
+
+	const animations = ['fadeIn', 'fadeOut', 'fadeInOut', 'drawIn', 'drawInOut', 'rainbow'];
+
+	return (
+		<div className='animations'>
+			<div className='animations__controls'>
+				<h3>Animation Controls</h3>
+				<div></div>
+				<div className='animations__control'>
+					<label htmlFor='stroke-color'>Stroke Color</label>
+					<input
+						id='stroke-color'
+						type='color'
+						value={strokeColor}
+						onChange={e => {
+							setLineColor(e.target.value);
+						}}
+					/>
+				</div>
+				<div className='animations__control'>
+					<label htmlFor='stroke-width'>Stroke Width (px)</label>
+					<input
+						id='stroke-widthr'
+						type='number'
+						value={strokeWidth}
+						onChange={e => {
+							setStrokeWidth(Number(e.target.value));
+						}}
+					/>
+				</div>
+				<div className='animations__control'>
+					<label htmlFor='animation-duration'>Animation Duration (s)</label>
+					<input
+						id='animation-duration'
+						type='number'
+						value={animationDuration}
+						onChange={e => setAnimationDuration(Number(e.target.value))}
+					/>
+				</div>
+			</div>
+			<div className='animations__container'>
+				{animations.map(animation => {
+					return (
+						<div className='animations__frame'>
+							<MonsterLine
+								key={`animation-${animation}`}
+								style={{
+									animation: `${animation} ${animationDuration}s ease 0s infinite`,
+									//  @ts-ignore
+									'--line-color': strokeColor,
+									stroke: strokeColor,
+									strokeWidth: `${strokeWidth}px`,
+								}}
+							/>
+							<b>{`Animation: ${animation}`}</b>
+						</div>
+					);
+				})}
+			</div>
+		</div>
+	);
+}

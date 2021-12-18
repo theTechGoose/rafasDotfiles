@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create Link Should provide the correct shape to quickbase write method 1`] = `
+Object {
+  "body": Object {
+    "data": Array [
+      Object {
+        "3": Object {
+          "value": "bmhvhc72c",
+        },
+        "61027": Object {
+          "value": "3",
+        },
+      },
+    ],
+    "to": "this is a test value",
+  },
+  "writeurl": "https://api.quickbase.com/v1/records",
+}
+`;

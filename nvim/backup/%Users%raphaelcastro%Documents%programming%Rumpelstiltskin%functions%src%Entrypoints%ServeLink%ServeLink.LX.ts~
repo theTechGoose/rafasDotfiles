@@ -1,0 +1,26 @@
+import { quickbaseRead } from "../../Shared/Quickbase";
+import * as Jwt from "jsonwebtoken";
+import { encryptionKey } from "../../../secrets/EncryptionKey";
+import { LetterReference_ } from "../CreateLink/CreateLink.LX";
+import {getSecret, SECRETS_CONF} from "../../../secrets/CRM";
+
+/* <-- Import End --> */
+
+export function decodeToken(token: string): LetterReference_ {
+  return Jwt.verify(token, encryptionKey) as any;
+}
+
+/* <-- Variable Definition End --> */
+
+export async function getHtml(token: string) {
+  const {id, table: from, htmlField} = decodeToken(token);
+  const {CRM} = SECRETS_CONF
+  const headers = await getSecret(CRM)
+  const record = await quickbaseRead({
+    from,
+    id,
+    select: [htmlField],
+    headers
+  });
+  return record.data[0][htmlField].value;
+}

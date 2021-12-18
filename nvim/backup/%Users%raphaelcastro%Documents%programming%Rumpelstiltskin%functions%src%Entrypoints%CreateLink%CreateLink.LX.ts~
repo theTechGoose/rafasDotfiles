@@ -1,0 +1,83 @@
+import * as Jwt from "jsonwebtoken";
+import axios from "axios";
+import { encryptionKey } from "../../../secrets/EncryptionKey";
+import { stringify } from "querystring";
+// import { quickbaseWrite } from "../../Shared/Quickbase";
+import { getSecret, SECRETS_CONF } from "../../../secrets/CRM";
+
+/* <-- Import End --> */
+
+export interface LetterReference_ {
+    id: number;
+    table: string;
+    linkField: number;
+    htmlField: number;
+}
+
+interface Token_ {
+    [key: string]: string;
+    token: string;
+}
+
+const CONFIG = {
+    baseUrl:
+        "https://us-central1-rumpelstiltskin-8cadf.cloudfunctions.net/serveLink",
+    shortenLinkEndpoint:
+        "https://us-central1-shortlink-3f360.cloudfunctions.net/shortenLink",
+    testUrl: "http://localhost:5001/rumpelstiltskin-8cadf/us-central1/serveLink"
+};
+
+/* <-- Variable Definition End --> */
+
+export async function BuildWelcomeLetterReference({
+    id,
+    table,
+    linkField,
+    htmlField,
+}) {
+    const { baseUrl } = CONFIG;
+    const token = createToken(id, table, linkField, htmlField);
+    const queryString = stringify(token);
+    const longLink = `${baseUrl}?${queryString}`;
+    const { shortLink } = await shortenUrl(longLink);
+    const finalShortLink = removeHttpPrefix(shortLink);
+    const { CRM } = SECRETS_CONF;
+    const headers = await getSecret(CRM);
+    const output = {
+        to: table,
+        id,
+        field: linkField,
+        value: finalShortLink,
+        headers,
+    };
+    return output;
+}
+
+export function createToken(
+    id: number,
+    table: string,
+    linkField: number,
+    htmlField: number
+): Token_ {
+    return {
+        token: Jwt.sign({ id, table, linkField, htmlField }, encryptionKey),
+    } as any;
+}
+
+export async function shortenUrl(url: string) {
+    const { shortenLinkEndpoint: endpoint } = CONFIG;
+    let res: any;
+    try {
+        res = await axios.post(endpoint, { url });
+    } catch (err) {}
+    return res.data;
+}
+
+export function removeHttpPrefix(link: string) {
+    const arr: Array<string> = link.split("/").filter((v: string) => {
+        return !v.includes("http") && v !== "";
+    });
+    return arr.join("/");
+}
+
+// prints the numbers 1 to 100

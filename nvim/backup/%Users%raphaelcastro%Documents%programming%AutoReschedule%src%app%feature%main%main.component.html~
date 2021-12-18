@@ -1,0 +1,50 @@
+<div id="flexWrapper">
+	<app-sidebar
+		class="sidebar"
+		[currentLabel]="stepOutput[current]?.label"
+		[guestPaid]="guestPaid"
+	></app-sidebar>
+	<div id="stepperWrapper">
+		<div id="borderbox">
+			<p-steps
+				(activeIndexChange)="changeStep($event)"
+				[activeIndex]="current"
+				[model]="stepOutput"
+				[readonly]="false"
+			></p-steps>
+			<app-dates
+				@content
+				[soldOutDates]="soldOutDates"
+				(date)="next($event)"
+				id="date"
+				*ngIf="stepOutput[current]?.label === 'Pick a Date'"
+			></app-dates>
+			<app-form
+				@content
+				class="billing"
+				*ngIf="stepOutput[current]?.label === 'Info'"
+				[prefill]="prefillValues"
+				(profile)="next($event)"
+			></app-form>
+			<app-billing
+				@content
+				id="billing"
+				*ngIf="stepOutput[current]?.label === 'Secure'"
+				[cardResponse]="cardResponse"
+				[showSpinner]="showSpinner"
+				(submit)="next($event)"
+			></app-billing>
+			<app-review
+				@content
+				(submit)="next(true)"
+				[valid]="guestPaid"
+				*ngIf="stepOutput[current]?.label === 'Finalize'"
+				[date]="date"
+				[query]="prefillValues"
+			></app-review>
+			<img id="mobileLogo" src="../../../assets/B 77341.jpg" alt="" />
+		</div>
+	</div>
+</div>
+
+<button #pay id="customPayButton"></button>

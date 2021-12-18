@@ -1,0 +1,153 @@
+import { AnimatePresence, motion } from 'framer-motion';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import './App.less';
+import * as Pages from './Feature/Pages';
+
+import NavBar from './Feature/Shared/NavBar/NavBar.PAPI';
+import './tst.scss';
+import { Suspense, useEffect, useState } from 'react';
+import {versionMessage} from './versioning';
+import MonsterLoader from './demo/loader';
+
+
+// <-- Import End -->
+
+export function App() {
+  const location = useLocation();
+  return (
+    <>
+      <div className='test' hidden>
+        {' '}
+      </div>
+      {versionMessage}
+      <NavBar data-testid='chooseOne' />
+      <AnimatePresence data-testId='helloWorld' exitBeforeEnter>
+        <Switch location={location} key={location.pathname}>
+          <Route exact path='/'>
+            <MonsterLoader>
+              <></>
+            </MonsterLoader>
+          </Route>
+          <Route path='/landing'>
+            <Pages.Landing />
+          </Route>
+          <Route path='/confirm'>
+            <motion.div className='bg-gray-200 p-8'>
+              <Suspense
+                fallback={(function Loader() {
+                  const [s, ss] = useState('.');
+                  useEffect(() => {
+                    setTimeout(() => {
+                      if (s.length < 3) return ss((s) => s + '.');
+                      ss('.');
+                    }, 500);
+                  });
+
+                  return (
+                    <div className='flex justify-center align-middle'>
+                      <div className=''>Loading{s}</div>
+                    </div>
+                  );
+                })()}
+              >
+                <Pages.GuestInfo />
+              </Suspense>
+            </motion.div>
+          </Route>
+          <Route path='/destinations'>
+            <Suspense
+              fallback={(function Loader() {
+                const [s, ss] = useState('.');
+                useEffect(() => {
+                  setTimeout(() => {
+                    if (s.length < 3) return ss((s) => s + '.');
+                    ss('.');
+                  }, 500);
+                });
+
+                return (
+                  <div className='flex justify-center align-middle'>
+                    <div className=''>Loading{s}</div>
+                  </div>
+                );
+              })()}
+            >
+              <Pages.Destination />
+            </Suspense>
+            {/* <ChooseOne
+							options={[
+								{
+									id: 1,
+									key: nanoid(),
+									title: 'Punta Cana',
+									numberOfNights: 3,
+									roomType: 'Standard',
+									category: 'Vacation Activation',
+									quantity: 1,
+									shipping: 0,
+									href: '#',
+									price: 150,
+									priceDescription: '$150 Deposit',
+									description:
+										'Enjoy a tropical paradise nestled in one of the biggest harbors in the country.',
+									options: ['2 Room types available'],
+									imageSrc:
+										'https://www.flytap.com/-/media/Flytap/new-tap-pages/destinations/north-america/dominican-republic/punta-cana/Images-Landing-Page-Destinations-punta-cana/PUJ_PagDestino_JUN2021_HeroeBannerMobile_1024x553.jpg',
+									imageAlt: 'Punta Cana Dr.',
+									preferred: true,
+								},
+								{
+									id: 1,
+									key: nanoid(),
+									title: 'Branson',
+									category: 'Vacation Activation',
+									quantity: 1,
+									shipping: 0,
+									roomType: 'Standard',
+									numberOfNights: 3,
+									href: '#',
+									price: 150,
+									priceDescription: '$150 Deposit',
+									description:
+										'Enjoy a tropical paradise nestled in one of the biggest harbors in the country.',
+									options: ['2 Room types available'],
+									imageSrc:
+										'https://i0.wp.com/bransontravel.com/wp-content/uploads/2020/09/aquarium.jpg',
+									imageAlt: 'Branson Mo',
+									preferred: false,
+								},
+								// More products...
+							]}
+							advanceTo='/addons'></ChooseOne> */}
+          </Route>
+          <Route path='/checkout'>
+            <Suspense
+              fallback={function Loader() {
+                const [s, ss] = useState('.');
+                useEffect(() => {
+                  setTimeout(() => {
+                    if (s.length < 3) return ss((s) => s + '.');
+                    ss('.');
+                  }, 500);
+                });
+
+                return (
+                  <div className='flex justify-center align-middle'>
+                    <div className=''>Loading{s}</div>
+                  </div>
+                );
+              }}
+            >
+              <Pages.Checkout />
+            </Suspense>
+          </Route>
+          <Route path='/admin'>
+            <Pages.AdminPortal />
+          </Route>
+          <Redirect to='/' />
+        </Switch>
+      </AnimatePresence>
+    </>
+  );
+}
+export default App;

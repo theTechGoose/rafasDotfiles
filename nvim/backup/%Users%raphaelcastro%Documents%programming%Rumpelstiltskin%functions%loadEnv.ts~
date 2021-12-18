@@ -1,0 +1,7 @@
+const rel = __dirname.split("/");
+rel.pop();
+rel.pop();
+rel.pop();
+process.env.GOOGLE_APPLICATION_CREDENTIALS = `${rel.join(
+  "/"
+)}/secrets/fireSecret.json`;

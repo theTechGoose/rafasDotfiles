@@ -1,0 +1,92 @@
+import { toUpdate } from "../../Assets/Datelegs";
+import { unparse } from "papaparse";
+import { writeFileSync } from "fs";
+import { createToken, shortenUrl } from "../CreateLink/CreateLink.LX";
+// import { QB_CFG } from "../.././Shared/Quickbase";
+import { stringify } from "querystring";
+import _ = require("lodash");
+// import axios from "axios";
+
+const datelegTable = "bpb28qsnn";
+const linkField = 363;
+const htmlField = 287;
+const base =
+  "https://us-central1-rumpelstiltskin-8cadf.cloudfunctions.net/serveLink";
+// export interface BatchWriteElement_ {
+//   "3": { value: number };
+//   "363": { value: string };
+// }
+
+export interface LinkSeed_ {
+  id: string;
+  link: string;
+}
+
+async function createLinkSeeds(
+  input: Array<number>
+): Promise<Array<LinkSeed_>> {
+  const links = input.map((id) => {
+    return new Promise(async (r) => {
+      const currentToken = createToken(id, datelegTable, linkField, htmlField);
+      const query = stringify(currentToken);
+      const link = await shortenUrl(`${base}?${query}`);
+      r({
+        ...link,
+        id,
+      });
+    });
+  });
+  return (await Promise.all(links)) as Array<LinkSeed_>;
+}
+
+//   return (await Promise.all(links)) as Array<LinkSeed_>;
+// }
+// export async function batchQuickbaseWrite(input: Array<LinkSeed_>) {
+//   const headers = {
+//     "QB-Realm-Hostname": "monsterrg.quickbase.com",
+//     "User-Agent": "{User-Agent}",
+//     Authorization: "QB-USER-TOKEN b4y3bc_jvvk_0_cxmv48rd953zuszmhz4gca37baf",
+//     "Content-Type": "application/json",
+//   };
+//   const { table: to } = QB_CFG.quickbase;
+//   const data: Array<{ "3": { value: string }; "363": { value: string } }> =
+//     input.map((value) => {
+//       const { link, id } = value;
+//       return {
+//         "3": { value: id },
+//         "363": { value: link },
+//       };
+//     });
+//   const body = {
+//     to,
+//     data,
+//   };
+//   const { writeurl } = QB_CFG.quickbase;
+//   await axios.post(writeurl, JSON.stringify(body), { headers });
+//   console.log("Done!");
+// }
+
+// async function updateRecord(record: number) {
+// const token = createToken(record, datelegTable, linkField, htmlField);
+// const query = stringify(token);
+// const url = `${base}?${query}`;
+// const shortLink = await shortenUrl(url);
+// await quickbaseWrite(datelegTable, record, linkField, shortLink.shortLink);
+// console.log(
+//   `done editing ${record} shortlink = ${shortLink.shortLink} base = ${base}`
+// );
+// }
+async function main(ls: Array<number>) {
+  const input = _.chunk(ls, 1);
+  const temp = [];
+  for (let i = 0; i < input.length; i++) {
+    console.log(`Starting chunk ${i} of ${input.length}`);
+    const chunk = input[i];
+    temp.push(await createLinkSeeds(chunk));
+  }
+  const rawRows = temp.flat();
+  const parsedRows = unparse(rawRows, { header: true });
+  writeFileSync("/Users/raphaelcastro/Desktop/Links.csv", parsedRows);
+  console.log(parsedRows);
+}
+main(toUpdate);

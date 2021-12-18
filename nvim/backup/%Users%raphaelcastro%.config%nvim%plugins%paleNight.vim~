@@ -1,0 +1,2 @@
+Plug 'drewtempelmeyer/palenight.vim'
+set background=dark

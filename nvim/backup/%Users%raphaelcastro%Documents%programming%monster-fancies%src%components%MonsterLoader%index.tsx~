@@ -1,0 +1,514 @@
+import { useEffect, useState } from 'react';
+
+import './styles.scss';
+
+// TODO: Get hex colors from centralized location as variables
+// TODO: Setup customization with props
+
+// interface MonsterLoader_ {
+// 	isAsync?: boolean;
+// }
+
+// @ts-ignore
+export default function MonsterLoader({ children, isAsync = true }) {
+	const [isHeight] = useState(window.innerHeight < window.innerWidth ? true : false);
+	const [isLoaded, setIsLoaded] = useState(!isAsync);
+	const [showChild, setShowChild] = useState(false);
+	const [animClass, setAnimClass] = useState('loading');
+
+	console.log('isLoaded', isLoaded);
+
+	let oneTime = true;
+	function resetAnim() {
+		if (!showChild) {
+			if (!isLoaded) {
+				setAnimClass('');
+			} else {
+				if (oneTime) {
+					setAnimClass('');
+				} else {
+					setShowChild(true);
+				}
+			}
+		}
+	}
+
+	//Testing Only
+
+	useEffect(() => {
+		setTimeout(() => {
+			console.log('LOADED!');
+			setIsLoaded(true);
+		}, 1000);
+	}, []);
+	useEffect(() => {
+		console.log('Show child: ', showChild);
+	}, [showChild]);
+	//Testing Only
+
+	useEffect(() => {
+		if (!isLoaded) {
+			setAnimClass('loading');
+		} else {
+			if (oneTime) {
+//oneTime = false;
+				setAnimClass('loaded');
+			}
+		}
+	}, [animClass, oneTime, isLoaded]);
+
+	const lineColor = '#22931f';
+
+	return (
+		<>
+			<div className='monster-svg'>
+				<svg
+					viewBox='0 0 750 750'
+					width={!isHeight ? window.innerWidth / 1.5 : undefined}
+					height={isHeight ? window.innerHeight / 1.5 : undefined}>
+					<defs>
+						<style>{`.cls-2{fill:url(#radial-gradient);}.cls-3{fill:url(#radial-gradient-2);}.cls-4{fill:url(#radial-gradient-3);}.cls-5{fill:#161717;}.cls-6{fill:#f7f8f9;}.cls-7{fill:#1f2020;}.cls-8{fill:url(#linear-gradient);}.cls-9{fill:url(#linear-gradient-2);}.cls-10{fill:url(#linear-gradient-3);}.cls-11{fill:url(#linear-gradient-4);}.cls-12{fill:url(#linear-gradient-5);}.cls-13{fill:url(#linear-gradient-6);}.cls-14{fill:url(#linear-gradient-7);}.cls-15{fill:url(#linear-gradient-8);}.cls-16{fill:url(#linear-gradient-9);}.cls-17{fill:url(#linear-gradient-10);}.cls-18{fill:url(#linear-gradient-11);}.cls-19{fill:url(#linear-gradient-12);}.cls-20{fill:url(#linear-gradient-13);}`}</style>
+						<radialGradient
+							id='radial-gradient'
+							cx='375'
+							cy='499.31'
+							r='243.88'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0.01' stopColor='#d2d2d2' />
+							<stop offset='0.49' stopColor='#f1f1f2' />
+							<stop offset='1' stopColor='#97999b' />
+						</radialGradient>
+						<radialGradient
+							id='radial-gradient-2'
+							cx='238.39'
+							cy='344.49'
+							fx='229.5537983497927'
+							r='165.05'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0.08' stopColor='#4c8a3f' />
+							<stop offset='0.31' stopColor='#4c8a3f' />
+							<stop offset='1' stopColor='#162d0e' />
+						</radialGradient>
+						<radialGradient
+							id='radial-gradient-3'
+							cx='511.61'
+							cy='344.49'
+							fx='511.60812168251505'
+							r='165.05'
+							xlinkHref='#radial-gradient-2'
+						/>
+						<linearGradient
+							id='linear-gradient'
+							x1='317.48'
+							y1='271.15'
+							x2='317.48'
+							y2='298.72'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0' stopColor='#58a746' />
+							<stop offset='0.25' stopColor='#57a444' />
+							<stop offset='0.87' stopColor='#34722c' />
+							<stop offset='1' stopColor='#34722c' />
+						</linearGradient>
+						<linearGradient
+							id='linear-gradient-2'
+							x1='40.87'
+							y1='271.15'
+							x2='40.87'
+							y2='298.72'
+							gradientTransform='matrix(-1, 0, 0, 1, 473.39, 0)'
+							xlinkHref='#linear-gradient'
+						/>
+						<linearGradient
+							id='linear-gradient-3'
+							x1='131.4'
+							y1='206.52'
+							x2='618.6'
+							y2='206.52'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0' stopColor='#d2d2d2' />
+							<stop offset='0.49' stopColor='#f1f1f2' />
+							<stop offset='1' stopColor='#d2d2d2' />
+						</linearGradient>
+						<linearGradient
+							id='linear-gradient-4'
+							x1='606.57'
+							y1='138.78'
+							x2='546.93'
+							y2='88'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0' stopColor='#041a00' />
+							<stop offset='0.26' stopColor='#041a00' />
+							<stop offset='0.58' stopColor='#396631' />
+							<stop offset='1' stopColor='#396631' />
+						</linearGradient>
+						<linearGradient
+							id='linear-gradient-5'
+							x1='217.23'
+							y1='87.53'
+							x2='139.86'
+							y2='128.63'
+							gradientUnits='userSpaceOnUse'>
+							<stop offset='0' stopColor='#396631' />
+							<stop offset='0.45' stopColor='#396631' />
+							<stop offset='0.75' stopColor='#041a00' />
+							<stop offset='1' stopColor='#041a00' />
+						</linearGradient>
+						<linearGradient
+							id='linear-gradient-6'
+							x1='236.51'
+							y1='528.25'
+							x2='294.91'
+							y2='528.25'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-7'
+							x1='238.13'
+							y1='479.34'
+							x2='294.91'
+							y2='479.34'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-8'
+							x1='236.51'
+							y1='485.04'
+							x2='294.91'
+							y2='485.04'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-9'
+							x1='238.13'
+							y1='485.04'
+							x2='294.91'
+							y2='485.04'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-10'
+							x1='-368.75'
+							y1='528.25'
+							x2='-310.35'
+							y2='528.25'
+							gradientTransform='matrix(-1, 0, 0, 1, 144.74, 0)'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-11'
+							x1='-367.13'
+							y1='479.34'
+							x2='-310.35'
+							y2='479.34'
+							gradientTransform='matrix(-1, 0, 0, 1, 144.74, 0)'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-12'
+							x1='-368.75'
+							y1='485.04'
+							x2='-310.35'
+							y2='485.04'
+							gradientTransform='matrix(-1, 0, 0, 1, 144.74, 0)'
+							xlinkHref='#linear-gradient-3'
+						/>
+						<linearGradient
+							id='linear-gradient-13'
+							x1='-367.13'
+							y1='485.04'
+							x2='-310.35'
+							y2='485.04'
+							gradientTransform='matrix(-1, 0, 0, 1, 144.74, 0)'
+							xlinkHref='#linear-gradient-3'
+						/>
+					</defs>
+					{/* @ts-ignore */}
+					<g id='Monster_Full' className={animClass}>
+						<g id='Monster_Head'>
+							<path
+								className='cls-2'
+								d='M501.33,387.76,438.8,288.24,375,271.14l-63.8,17.1-62.53,99.52c-47.59,40.83-132.27,145.93-132.32,146C153.05,646.43,255,727.47,375,727.47s222-81,258.65-193.72C633.6,533.69,548.92,428.59,501.33,387.76Z'
+							/>
+							<path
+								className='cls-3'
+								d='M248.67,387.76l62.53-99.52,63.8-17.1V155.23c-150.89,0-273.22,128.1-273.22,286.12a298,298,0,0,0,14.57,92.4C116.4,533.69,201.08,428.59,248.67,387.76Z'
+							/>
+							<path
+								className='cls-4'
+								d='M375,155.23V271.14l63.8,17.1,62.53,99.52c47.59,40.83,132.27,145.93,132.32,146a298,298,0,0,0,14.57-92.4C648.22,283.33,525.89,155.23,375,155.23Z'
+							/>
+						</g>
+						<g id='Monster_Eyes'>
+							<g id='Monster_Eye_Left'>
+								<path
+									className='cls-5'
+									d='M142.89,223.11s42.07,35.74,90.67,50.2c0,0-1.21,31.64,36.26,58.84,0,0-21.15,48.36-21.15,55.61,0,0,66.49-69.51,126.33-77.37V198l-122.24-4.83'
+								/>
+								<path
+									className='cls-6'
+									d='M255.92,241.49c22.74,23,82.31,27.87,82.31,27.87a51.17,51.17,0,0,1,13,2.25,7.64,7.64,0,0,1,5,9c-6.69,26.47-38.74,25.78-38.74,25.78-38-1.18-64.71-63.27-64.71-63.27S252.37,237.89,255.92,241.49Z'
+								/>
+								<circle className='cls-7' cx='317.48' cy='286.52' r='19.16' />
+								<path
+									className='cls-8'
+									d='M334.13,284c0,9.19-7.46,14.21-16.65,14.21s-16.65-5-16.65-14.21a16.65,16.65,0,1,1,33.3,0Z'
+								/>
+								<ellipse className='cls-7' cx='317.48' cy='288.24' rx='6.28' ry='17.1' />
+							</g>
+							<g id='Monster_Eye_Right'>
+								<path
+									className='cls-5'
+									d='M607.11,223.11s-42.07,35.74-90.67,50.2c0,0,1.21,31.64-36.26,58.84,0,0,21.15,48.36,21.15,55.61,0,0-66.49-69.51-126.33-77.37V198l122.24-4.83'
+								/>
+								<path
+									className='cls-6'
+									d='M494.08,241.49c-22.74,23-82.31,27.87-82.31,27.87a51.17,51.17,0,0,0-13,2.25,7.64,7.64,0,0,0-5,9c6.69,26.47,38.74,25.78,38.74,25.78,38-1.18,64.71-63.27,64.71-63.27S497.63,237.89,494.08,241.49Z'
+								/>
+								<circle className='cls-7' cx='432.52' cy='286.52' r='19.16' />
+								<path
+									className='cls-9'
+									d='M415.87,284c0,9.19,7.46,14.21,16.65,14.21s16.65-5,16.65-14.21a16.65,16.65,0,0,0-33.3,0Z'
+								/>
+								<ellipse className='cls-7' cx='432.52' cy='288.24' rx='6.28' ry='17.1' />
+							</g>
+						</g>
+						<g id='Monster_HelmetThing'>
+							<path
+								id='Monster_HelmetThing_Black'
+								className='cls-5'
+								d='M274.29,198.52c45.88,6.07,96.19,13.79,140.45-4.17,12.78-5.18,25.26-11.17,38-16.5q17.07-7.14,34.36-13.81c-33.22-14.53-71.42-22.83-112.09-22.83-62.19,0-118.61,19.38-160.23,50.88C234.69,193.13,254.54,195.91,274.29,198.52Z'
+							/>
+							<path
+								id='Monster_HelmetThing_Grey'
+								className='cls-10'
+								d='M375,257.81c34.45-41.11,243.6-34.46,243.6-34.46S530.35,149,453,155.65c0,0-52,9.07-78,15.11-26-6-78-15.11-78-15.11-77.37-6.65-165.62,67.7-165.62,67.7S340.55,216.7,375,257.81Z'
+							/>
+						</g>
+						<g id='Monster_Nostrils'>
+							<path
+								className='cls-5'
+								d='M323.75,372.05c-1.67,0-16.46,2.42-19.15-2.42s-9.8-4-9.8-4c-7,4-12.48,16.92-15.61,26.09,0,0-1.82,6.58,0,7.26,0,0,2.44,1.28,9.41-2h0c12.1-5.94,32.33-13.88,35.14-13.47C327.73,384.09,325.42,372.05,323.75,372.05Z'
+							/>
+							<path
+								className='cls-5'
+								d='M426.69,372.05c1.67,0,16.47,2.42,19.16-2.42s9.8-4,9.8-4c7,4,12.48,16.92,15.6,26.09,0,0,1.82,6.58,0,7.26,0,0-2.44,1.28-9.42-2h0c-12.09-5.94-32.32-13.88-35.14-13.47C422.72,384.09,425,372.05,426.69,372.05Z'
+							/>
+						</g>
+						<g id='Monster_Horns'>
+							<path
+								id='Monster_Horn_Right'
+								className='cls-11'
+								d='M546.67,204s-40.5-6-52.59-34.46c0,0,130.56-152.32,131.77-146.88S554.52,196.76,546.67,204Z'
+							/>
+							<path
+								id='Monster_Horn_Left'
+								className='cls-12'
+								d='M203.33,204s40.5-6,52.59-34.46c0,0-130.56-152.32-131.77-146.88S195.48,196.76,203.33,204Z'
+							/>
+						</g>
+						<g id='Monster_Mouth'>
+							<path
+								className='cls-5'
+								d='M375,495.05c-98.32,0-167.95-47.71-167.95-47.71C256.2,565.15,375,560.88,375,560.88s118.8,4.27,168-113.54C543,447.34,473.32,495.05,375,495.05Z'
+							/>
+							<path
+								className='cls-13'
+								d='M263.5,571.89s3.08-47.79,20.55-81.83l-45.92-5.45S226.93,544.09,263.5,571.89Z'
+							/>
+							<path
+								className='cls-14'
+								d='M239.8,474.07l-1.67,10.54c5.24-1.55,11.35-3.1,18.33-4.59C247,476.75,239.8,474.07,239.8,474.07Z'
+							/>
+							<path
+								className='cls-15'
+								d='M256.46,480c-7,1.49-13.09,3-18.33,4.59l45.92,5.45c.18-.37.37-.73.57-1.1C275.91,486.58,265.22,483.05,256.46,480Z'
+							/>
+							<path
+								className='cls-16'
+								d='M256.46,480c-7,1.49-13.09,3-18.33,4.59l45.92,5.45c.18-.37.37-.73.57-1.1C275.91,486.58,265.22,483.05,256.46,480Z'
+							/>
+							<path
+								className='cls-5'
+								d='M279.76,492.18c-12.87,27.05-17.36,60.6-18.69,73.85-26.27-24.5-21.82-68.65-20.4-78.74a29.58,29.58,0,0,1-3.35-1.05,12.23,12.23,0,0,1-2.24-1.19c-1.35,8.14-8.8,62.22,26.65,89.17a2.92,2.92,0,0,0,1.77.59,2.87,2.87,0,0,0,1.21-.26,2.93,2.93,0,0,0,1.7-2.47c0-.52,3.15-45.74,19.25-78.72C283.7,493,281.76,492.57,279.76,492.18Z'
+							/>
+							<path
+								className='cls-5'
+								d='M236.51,473.12a5.3,5.3,0,0,0-3,2.86,40,40,0,0,0-1.36,6c0,.41-.42-2.72,0,2.22l.06.8h0a6.46,6.46,0,0,1,2.75,1.77,6.34,6.34,0,0,1,1.77,2.75,6.55,6.55,0,0,1,.35.93l3.42-2.23S242,478.9,243,474.07,236.51,473.12,236.51,473.12Z'
+							/>
+							<path
+								className='cls-5'
+								d='M279.76,492.18l2.6-6.61s4.38,1.39,5.5,3.31,1.95,3,2.29,4.62a39.65,39.65,0,0,1,0,8.21'
+							/>
+							<path
+								className='cls-5'
+								d='M240.15,474.72s12.47,6.5,43.11,15.12l.79.22c31.21,8.73-19.84-10-19.84-10l-21.12-8.37'
+							/>
+							<path
+								className='cls-17'
+								d='M486.5,571.89S483.42,524.1,466,490.06l45.92-5.45S523.07,544.09,486.5,571.89Z'
+							/>
+							<path
+								className='cls-18'
+								d='M510.2,474.07l1.67,10.54c-5.24-1.55-11.35-3.1-18.33-4.59C503,476.75,510.2,474.07,510.2,474.07Z'
+							/>
+							<path
+								className='cls-19'
+								d='M493.54,480c7,1.49,13.09,3,18.33,4.59L466,490.06c-.18-.37-.37-.73-.57-1.1C474.09,486.58,484.78,483.05,493.54,480Z'
+							/>
+							<path
+								className='cls-20'
+								d='M493.54,480c7,1.49,13.09,3,18.33,4.59L466,490.06c-.18-.37-.37-.73-.57-1.1C474.09,486.58,484.78,483.05,493.54,480Z'
+							/>
+							<path
+								className='cls-5'
+								d='M470.24,492.18c12.87,27.05,17.36,60.6,18.69,73.85,26.27-24.5,21.82-68.65,20.4-78.74a29.58,29.58,0,0,0,3.35-1.05,12.23,12.23,0,0,0,2.24-1.19c1.35,8.14,8.8,62.22-26.65,89.17a2.92,2.92,0,0,1-1.77.59,2.87,2.87,0,0,1-1.21-.26,2.93,2.93,0,0,1-1.7-2.47c0-.52-3.15-45.74-19.25-78.72C466.3,493,468.24,492.57,470.24,492.18Z'
+							/>
+							<path
+								className='cls-5'
+								d='M513.52,488.78a7.09,7.09,0,0,1,.56-1.18l-.11.14.13-.18a7.34,7.34,0,0,1,.51-.73,9,9,0,0,1,.74-.89,9.25,9.25,0,0,1,1.76-1.35c.26-.15.5-.26.74-.37v0c.42-4.94,0-1.81,0-2.22a40,40,0,0,0-1.36-6,5.3,5.3,0,0,0-3-2.86s-7.48-3.88-6.49.95,2.46,14.14,2.46,14.14l3.47,2.26A6.53,6.53,0,0,1,513.52,488.78Z'
+							/>
+							<path
+								className='cls-5'
+								d='M470.24,492.18l-2.6-6.61s-4.38,1.39-5.5,3.31-1.95,3-2.29,4.62a39.65,39.65,0,0,0,0,8.21'
+							/>
+							<path
+								className='cls-5'
+								d='M509.85,474.72s-12.47,6.5-43.11,15.12l-.79.22c-31.21,8.73,19.84-10,19.84-10l21.12-8.37'
+							/>
+						</g>
+					</g>
+					<g
+						id='Monster_Line'
+						//@ts-ignore
+						style={{ '--line-color': lineColor }}
+						className={animClass}
+						onAnimationEnd={resetAnim}>
+						<g id='Features'>
+							<g id='Mouth'>
+								<path
+									id='Tooth'
+									className='line'
+									d='M507.36,475.9l-38.3,13.28A212.62,212.62,0,0,1,488.93,566a66.81,66.81,0,0,0,4.59-5C515.59,534.1,511.42,496.13,507.36,475.9Z'
+								/>
+								<path
+									id='Outline'
+									className='line'
+									d='M375,495.05c97.34,1.78,168-47.71,168-47.71a191.56,191.56,0,0,1-14.16,27.86c-4.27,6.94-12.83,18.37-12.83,18.37s1.51,28.54-4.09,45.36c-8,28.48-26.58,35.62-26.58,35.62-.85-7.2-2-14.86-3.53-22.9-1.48-7.82-5-22-5-22s-43,31.25-101.8,31.23'
+								/>
+							</g>
+							<path
+								id='Nostril'
+								className='line'
+								d='M426.25,372.05c-2.36,5.4-3,9.84-1.23,11.09a2,2,0,0,0,1.23.37,74.07,74.07,0,0,1,9.27,2.55c13,4.5,17.24,7.2,29.22,12.25,2,.85,6,1.75,6.41-.42,1-5.28-4-23.74-15.95-32.29a16.08,16.08,0,0,0-6.63,1.1c-3.74,1.5-2.58,3.91-7.33,5.3C437.25,373.17,426.25,372.05,426.25,372.05Z'
+							/>
+							<g id='Eyes'>
+								<path
+									className='line'
+									d='M607.11,223.11a286.26,286.26,0,0,1-32.38,23,287.07,287.07,0,0,1-58.29,27.19,80.17,80.17,0,0,1-36.26,58.84,320.14,320.14,0,0,1,16.93,41.34q2.31,7,4.19,13.72'
+								/>
+								<circle className='line' cx='432.52' cy='286.52' r='19.16' />
+								<path
+									className='line'
+									d='M496.8,242.8c.23-.79.44-4.51-2.72-1.31-8.33,8.4-20.8,15.17-35.75,18.74-44.27,10.59-41.31,7.54-58.59,11.06-11.53,3-5.62,19,4,25.51,24.74,16.78,45.4,11.43,67.48-12.83C485.91,267.86,494.1,251.92,496.8,242.8Z'
+								/>
+							</g>
+						</g>
+						<g id='Head'>
+							<path
+								id='Cheek'
+								className='line'
+								d='M375,727.47a269.64,269.64,0,0,0,110.42-24.33c53.13-24.35,84.64-58.13,101-80.58,39.39-54,47.22-88.81,47.22-88.81s-14.16-20.87-70.2-82.59c-40.7-44.83-53.69-57-90.8-89.43-13.3-11.62-29.41-25.05-53.66-36.46a206,206,0,0,0-44-14.88'
+							/>
+							<path
+								id='Head_Side'
+								className='line'
+								d='M574.73,246.12a289.32,289.32,0,0,1,64.21,121.05,294.08,294.08,0,0,1-5.29,166.58'
+							/>
+							<g id='HelmetThing'>
+								<path
+									id='Thing2'
+									className='line'
+									d='M375,257.81s7-8.32,23.16-14.41c35.38-13.29,126.31-22.92,209-20.29,5.24.16,9.42.19,11.49.24-8.1-6.51-17.11-13.23-27.07-19.92a389.63,389.63,0,0,0-33.66-20.2L546.67,204c-11.34-2.1-32.76-8-47.27-26.48a63.23,63.23,0,0,1-5.32-8l7.68-8.93L464,155.24q-12.39,1.17-25.44,3A576.78,576.78,0,0,0,375,170.76'
+								/>
+								<path id='Thing1' className='line' d='M464,155.24a284.92,284.92,0,0,0-89-14' />
+								<path
+									id='Horn'
+									className='line'
+									d='M557.87,183.23c19.56-39.43,38.39-81.87,55.76-127.35q6.06-15.85,11.6-31.46a.42.42,0,0,0-.69-.43q-12.42,12.45-24.86,25.44C564,86.67,531.47,123.91,501.76,160.62'
+								/>
+							</g>
+						</g>
+						<g id='Features-2' data-name='Features'>
+							<g id='Mouth-2' data-name='Mouth'>
+								<path
+									id='Tooth-2'
+									data-name='Tooth'
+									className='line'
+									d='M242.64,475.9l38.3,13.28A212.62,212.62,0,0,0,261.07,566a66.81,66.81,0,0,1-4.59-5C234.41,534.1,238.58,496.13,242.64,475.9Z'
+								/>
+								<path
+									id='Outline-2'
+									data-name='Outline'
+									className='line'
+									d='M375,495.05c-97.34,1.78-167.95-47.71-167.95-47.71a191.56,191.56,0,0,0,14.16,27.86c4.27,6.94,12.83,18.37,12.83,18.37s-1.51,28.54,4.09,45.36c8,28.48,26.58,35.62,26.58,35.62.85-7.2,2-14.86,3.53-22.9,1.48-7.82,5-22,5-22s43,31.25,101.8,31.23'
+								/>
+							</g>
+							<path
+								id='Nostril-2'
+								data-name='Nostril'
+								className='line'
+								d='M323.75,372.05c2.36,5.4,3,9.84,1.23,11.09a2,2,0,0,1-1.23.37,74.07,74.07,0,0,0-9.27,2.55c-13,4.5-17.24,7.2-29.22,12.25-2,.85-6,1.75-6.41-.42-1-5.28,4-23.74,15.95-32.29a16.08,16.08,0,0,1,6.63,1.1c3.74,1.5,2.58,3.91,7.33,5.3C312.75,373.17,323.75,372.05,323.75,372.05Z'
+							/>
+							<g id='Eyes-2' data-name='Eyes'>
+								<path
+									className='line'
+									d='M142.89,223.11a286.26,286.26,0,0,0,32.38,23,287.07,287.07,0,0,0,58.29,27.19,80.17,80.17,0,0,0,36.26,58.84,320.14,320.14,0,0,0-16.93,41.34q-2.31,7-4.19,13.72'
+								/>
+								<circle className='line' cx='317.48' cy='286.52' r='19.16' />
+								<path
+									className='line'
+									d='M253.2,242.8c-.23-.79-.44-4.51,2.72-1.31,8.33,8.4,20.8,15.17,35.75,18.74,44.27,10.59,41.31,7.54,58.59,11.06,11.53,3,5.62,19-4,25.51-24.74,16.78-45.4,11.43-67.48-12.83C264.09,267.86,255.9,251.92,253.2,242.8Z'
+								/>
+							</g>
+						</g>
+						<g id='Head-2' data-name='Head'>
+							<path
+								id='Cheek-2'
+								data-name='Cheek'
+								className='line'
+								d='M375,727.47a269.64,269.64,0,0,1-110.42-24.33c-53.13-24.35-84.64-58.13-101-80.58-39.39-54-47.22-88.81-47.22-88.81s14.16-20.87,70.2-82.59c40.7-44.83,53.69-57,90.8-89.43,13.3-11.62,29.41-25.05,53.66-36.46a206,206,0,0,1,44-14.88'
+							/>
+							<path
+								id='Head_Side-2'
+								data-name='Head_Side'
+								className='line'
+								d='M175.27,246.12a289.32,289.32,0,0,0-64.21,121.05,294.08,294.08,0,0,0,5.29,166.58'
+							/>
+							<g id='HelmetThing-2' data-name='HelmetThing'>
+								<path
+									id='Thing2-2'
+									data-name='Thing2'
+									className='line'
+									d='M375,257.81s-7-8.32-23.16-14.41c-35.38-13.29-126.31-22.92-208.95-20.29-5.24.16-9.42.19-11.49.24,8.1-6.51,17.11-13.23,27.07-19.92a389.63,389.63,0,0,1,33.66-20.2L203.33,204c11.34-2.1,32.76-8,47.27-26.48a63.23,63.23,0,0,0,5.32-8l-7.68-8.93L286,155.24q12.39,1.17,25.44,3A576.78,576.78,0,0,1,375,170.76'
+								/>
+								<path
+									id='Thing1-2'
+									data-name='Thing1'
+									className='line'
+									d='M286,155.24a284.92,284.92,0,0,1,89-14'
+								/>
+								<path
+									id='Horn-2'
+									data-name='Horn'
+									className='line'
+									d='M192.13,183.23c-19.56-39.43-38.39-81.87-55.76-127.35Q130.31,40,124.77,24.42a.42.42,0,0,1,.69-.43q12.42,12.45,24.86,25.44c35.66,37.24,68.21,74.48,97.92,111.19'
+								/>
+							</g>
+						</g>
+					</g>
+				</svg>
+			</div>
+			{showChild && <>{children}</>}
+		</>
+	);
+}

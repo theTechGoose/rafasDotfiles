@@ -1,0 +1,13 @@
+import * as functions from 'firebase-functions'
+import {db} from '../../Shared/firestore'
+import {moveDocuments} from './MoveDocuments'
+
+
+
+export const retriggerFailed = functions.https.onRequest(async (request, response) => {
+  const res1 = await moveDocuments('pending', 'requests',db)
+  const res2 = await moveDocuments('requests', 'pending', db)
+  response.status(200).send({
+    'res': [res1, res2]
+  })
+})
