@@ -17,7 +17,7 @@ let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ '@yaegassy/coc-volar',
 \ ]
-
+let b:coc_pairs_disabled = [">", "<"]
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -33,7 +33,7 @@ function! s:check_back_space() abort
 endfunction
 
  " Use leader c to trigger completion.
-  inoremap <silent><expr> ∆ coc#refresh()
+inoremap <silent><expr> <leader>gi coc#refresh()
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin

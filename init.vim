@@ -16,9 +16,7 @@
 " General settings
 "--------------------------------------------------------------------------
 
-set expandtab
 set shiftwidth=4
-set tabstop=4
 set hidden
 set signcolumn=yes:2
 set relativenumber
@@ -29,7 +27,7 @@ set spell
 set title
 set ignorecase
 set smartcase
-set nowrap
+set wrap
 set list
 set listchars=tab:▸\ ,trail:·
 set mouse=a
@@ -40,35 +38,44 @@ set splitright
 set clipboard=unnamed
 set confirm
 set cursorline
-set exrc
+"set exrc
 set backup
 set backupdir=~/.local/share/nvim/backup//
 set updatetime=300 " Reduce time for highlighting other references
 set redrawtime=10000 " Allow more time for loading syntax on large files
 set conceallevel=1 " show vim-typescript 'ligatures' (return, null, function etc..)
-set timeoutlen=250
+set timeoutlen=400
 set wildcharm=<tab> "set to trigger auto complete in buffer script
-let g:netrw_liststyle=3 " these next two lines make it so a directory can be opened with nerdtree
-let g:netrw_keepdir=0
-let g:NERDTreeChDirMode=2
+"let g:netrw_liststyle=3 " these next two lines make it so a directory can be opened with nerdtree
+"let g:netrw_keepdir=0
+"let g:NERDTreeChDirMode=2
 
 "--------------------------------------------------------------------------
 " Key maps
 "--------------------------------------------------------------------------
 
-let mapleader = "\<space>"
+let mapleader = "\\"
 nmap <S-CR> :wq<CR>
+nmap <space> <leader>
+vmap <space> <leader>
 
 nmap <leader>ve :vsplit ~/.config/nvim/init.vim<cr>
 nmap <leader>vc :edit ~/.config/nvim/coc-settings.json<cr>
 nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
 
-nmap <leader>k :nohlsearch<CR>
+nmap <leader>h :call ClearHighlight()<cr>
 nmap <leader>Q :bufdo bdelete<cr>
+
+:function ClearHighlight()
+call feedkeys( ":nohlsearch\<CR>" )
+:call sneak#cancel()    
+:endfunction
 
 " Allow gf to open non-existent files
 "map <leader>gf :execute 'e %:h'expand('<cfile>')
- map gf :edit <cfile><cr>
+ nnoremap <leader>o :edit <cfile><cr>
+
+" open relative file, if it doesnt exist create it and open it
 
 " Reselect visual selection after indenting
 vnoremap < <gv
@@ -98,24 +105,27 @@ nnoremap N Nzzzv
 nnoremap J mzJ`z
 
 " remap auto-complete
-inoremap <silent><expr> <c-tab> coc#refresh()
+"inoremap <silent><expr> <c-tab> coc#refresh()
 
 " Open the current file in the default program
-nmap <leader>x :!xdg-open %<cr><cr>
+"nmap <leader>x :!xdg-open %<cr><cr>
 
 " Quickly escape to normal mode
 imap jk <esc>
 imap JK <esc> :call EscapeWithCaps()<CR>
+vmap jk <esc>
 
 " Easy insertion of a trailing ; or , from insert mode
 imap ;; <Esc>A;<Esc>
 imap ,, <Esc>A,<Esc>
+imap :: <Esc>A:
 
 
 cmap w!! %!sudo tee > /dev/null %
 
 " more precise marks
 nnoremap ' `
+nnoremap ` '
 
 " remap split movement
 nnoremap <leader><S-h> <C-w>h
@@ -124,12 +134,24 @@ nnoremap <leader><S-j> <C-w>j
 nnoremap <leader><S-k> <C-w>k
 
 " remap buffer movement
-map gn :bnext<cr>
-map gp :bprevious<cr>
+"map gn :bnext<cr>
+" map gp :bprevious<cr>
 " nnoremap <leader><leader> :b <tab>
 
 " remap save
-nnoremap <leader>w :wa<CR>
+nnoremap <leader>ww :call SaveAndFormat('1')<CR>
+nnoremap <leader>w <C-w>q
+nnoremap <leader>w <C-w>=
+
+" close window
+nnoremap <leader>wq <C-w>q
+
+:function SaveAndFormat(any) 
+wa
+silent! <silent>Prettier
+IndentGuidesEnable
+:endfunction
+
 " Hardmode
 " inoremap <bs> <nop>
 " nnoremap j <nop>
@@ -154,13 +176,28 @@ nnoremap <leader>sq :wqall!<cr>
 nnoremap <leader>swq <C-w>q
 
 " insert mapping for missing keys bug
-inoremap ' '
-inoremap ( (
-inoremap ) )
+" inoremap ' '
+" inoremap ( (
+" inoremap ) )
+" inoremap { {
+" inoremap } }
+
+" remap esc to leader e
+vnoremap <leader>e <esc>
+nnoremap <esc> <nop>
 
 
+" Preseve clipboard when deleting single characters
+nnoremap x "_x
+
+" map Whiplash
+nnoremap <leader>wip :Whiplash <Tab>
+nnoremap <leader>wic :WhiplashCD<CR>
 
 
+"map jumplist to leader j and k
+nnoremap <leader>k <C-o>
+nnoremap <leader>j <C-i>
 
 
 "--------------------------------------------------------------------------
@@ -175,31 +212,40 @@ autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin(data_dir . '/plugins')
+"source ~/.config/nvim/plugins/vim-shoot.vim
+"source ~/.config/nvim/plugins/arduino.vim
+"source ~/.config/nvim/plugins/context-commentstring.vim
+"source ~/.config/nvim/plugins/dispatch.vim
+"source ~/.config/nvim/plugins/editorconfig.vim
+"source ~/.config/nvim/plugins/ulTest.vim  deprecate
+"source ~/.config/nvim/plugins/eunuch.vim
+"source ~/.config/nvim/plugins/firenvim.vim
+"source ~/.config/nvim/plugins/fugitive.vim
+"source ~/.config/nvim/plugins/heritage.vim
+"source ~/.config/nvim/plugins/lion.vim
+"source ~/.config/nvim/plugins/phpactor.vim
+"source ~/.config/nvim/plugins/splitjoin.vim
+"source ~/.config/nvim/plugins/textobj-xmlattr.vim
+"source ~/.config/nvim/plugins/bad-practices.vim
+"source ~/.config/nvim/plugins/nvim-notify.vim
+"source ~/.config/nvim/plugins/vim-escCaps.vim
+"source ~/.config/nvim/plugins/vim-xtract.vim
+"source ~/.config/nvim/plugins/vimspector
+"source ~/.config/nvim/plugins/vim-be-good.vim
+"source ~/.config/nvim/plugins/vimspector.vim
  source ~/.config/nvim/plugins/airline.vim
  source ~/.config/nvim/plugins/sneak.vim
- source ~/.config/nvim/plugins/vim-shoot.vim
- source ~/.config/nvim/plugins/arduino.vim
  source ~/.config/nvim/plugins/coc.vim
  source ~/.config/nvim/plugins/commentary.vim
- source ~/.config/nvim/plugins/context-commentstring.vim
- source ~/.config/nvim/plugins/dispatch.vim
  source ~/.config/nvim/plugins/paleNight.vim
- source ~/.config/nvim/plugins/editorconfig.vim
- source ~/.config/nvim/plugins/ulTest.vim " deprecate
- source ~/.config/nvim/plugins/eunuch.vim
  source ~/.config/nvim/plugins/exchange.vim
- source ~/.config/nvim/plugins/firenvim.vim
  source ~/.config/nvim/plugins/floaterm.vim
- source ~/.config/nvim/plugins/fugitive.vim
  source ~/.config/nvim/plugins/fzf.vim
- source ~/.config/nvim/plugins/heritage.vim
  source ~/.config/nvim/plugins/lastplace.vim
- source ~/.config/nvim/plugins/lion.vim
  source ~/.config/nvim/plugins/markdown-preview.vim
  source ~/.config/nvim/plugins/nerdtree.vim
  source ~/.config/nvim/plugins/pasta.vim
  source ~/.config/nvim/plugins/peekaboo.vim
- source ~/.config/nvim/plugins/phpactor.vim
  source ~/.config/nvim/plugins/polyglot.vim
  source ~/.config/nvim/plugins/projectionist.vim
  source ~/.config/nvim/plugins/quickscope.vim
@@ -207,10 +253,8 @@ call plug#begin(data_dir . '/plugins')
  source ~/.config/nvim/plugins/rooter.vim
  source ~/.config/nvim/plugins/sayonara.vim
  source ~/.config/nvim/plugins/smooth-scroll.vim
- source ~/.config/nvim/plugins/splitjoin.vim
  source ~/.config/nvim/plugins/surround.vim
  source ~/.config/nvim/plugins/targets.vim
- source ~/.config/nvim/plugins/textobj-xmlattr.vim
  source ~/.config/nvim/plugins/unimpaired.vim
  source ~/.config/nvim/plugins/vim-test.vim
  source ~/.config/nvim/plugins/visual-multi.vim
@@ -220,18 +264,19 @@ call plug#begin(data_dir . '/plugins')
  source ~/.config/nvim/plugins/vim-signature
  source ~/.config/nvim/plugins/vim-prettier
  source ~/.config/nvim/plugins/vim-copilot
- source ~/.config/nvim/plugins/bad-practices.vim
  source ~/.config/nvim/plugins/nvim-treesitter.vim
- source ~/.config/nvim/plugins/nvim-notify.vim
  source ~/.config/nvim/plugins/vim-closetag.vim
- source ~/.config/nvim/plugins/vim-escCaps.vim
- source ~/.config/nvim/plugins/vim-xtract.vim
  source ~/.config/nvim/plugins/vim-noItalics.vim
  source ~/.config/nvim/plugins/setup-workspace.vim
- source ~/.config/nvim/plugins/vimspector
  source ~/.config/nvim/plugins/print-debug.vim
-source ~/.config/nvim/plugins/search-highlight.vim
-source ~/.config/nvim/plugins/vim-be-good.vim
+ source ~/.config/nvim/plugins/search-highlight.vim
+ source ~/.config/nvim/plugins/Codi.vim
+ source ~/.config/nvim/plugins/indent-rainbow.vim
+ source ~/.config/nvim/plugins/wiplash.vim
+ source ~/.config/nvim/plugins/devIcons.vim
+ source ~/.config/nvim/plugins/jsonc.vim
+ source ~/.config/nvim/plugins/v-coolor.vim
+
 call plug#end()
 doautocmd User PlugLoaded
 
@@ -241,68 +286,64 @@ doautocmd User PlugLoaded
 " Miscellaneous
 "--------------------------------------------------------------------------
 
-augroup FileTypeOverrides
-autocmd!
-" Use '//' instead of '/* */' comments
-autocmd FileType php setlocal commentstring=//%s
-autocmd TermOpen * setlocal nospell
-augroup ENDm
+
 
 " if buffer focus, check for changes, if leave, save
 " run prettier on save
 au FocusGained,BufEnter * :silent! checktime
-au FocusGained,BufEnter * :silent! NERDTreeRefreshRoot
+"au FocusGained,BufEnter * :silent! NvimTreeRefresh
 au FocusLost,WinLeave * :silent! w
-au FocusLost,WinLeave * :silent! <silent>Prettier
+" au FocusLost,WinLeave * :silent! <silent>Prettier
+" au BufWritePre * :silent! Prettier
 " au FocusGained,BufEnter * :silent! call ConfigBadP()
-au FocusGained,BufEnter * :silent! call ConfigureNotify()
-au FocusGained,BufEnter * :silent! call RemoveHighlight()
+" au FocusGained,BufEnter * :silent! call ConfigureNotify()
+ au FocusGained,BufEnter * :silent! call RemoveHighlight()
+" au BufEnter * :IndentGuidesEnable
 
-" Tree sitter config
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  }
-}
-require('spellsitter').setup()
-EOF
 
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<leader>so",
-      node_incremental = "<leader>",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-}
-EOF
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  indent = {
-    enable = true
-  }
-}
-EOF
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 
-" Pale night color scheme
+" nightfly color scheme
 colorscheme nightfly
-"let g:airline_theme = "palenight"
 if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if (has("termguicolors"))
-  set termguicolors
-endif
+" Change Color when entering Insert Mode
+highlight Cursor guifg=Blue guibg=LightGreen
+highlight Visual guifg=Black guibg=White
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "maintained",
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = true,
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<C-h>",
+            node_incremental = "<C-[>",
+            scope_incremental = "<C-h>",
+            node_decremental = "<C-l>",
+        }
+    },
+  autotag = {
+      enable = true,
+  },
+   rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 1000,
+  },
+  indent = {
+    enable = true
+  },
+}
+--require'nvim-tree'.setup()
+EOF
+
+
+autocmd FileType json syntax match Comment +\/\/.\+$+

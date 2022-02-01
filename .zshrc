@@ -83,7 +83,8 @@ compinit
     bindkey -v
     export KEYTIMEOUT=1
 
-    export ANDROID_HOME="$HOME/Android/Sdk/"
+ export NNN_OPTS="H"
+ export ANDROID_HOME="$HOME/Android/Sdk/"
 
     export GIT_EDITOR=vim
 
@@ -206,9 +207,8 @@ od() {
 
       testQuery=$(ls | fzf)
       if  [[ -n "${testQuery// /}" ]]; then
-          cd $testQuery
           query=$(find . -name package.json ! -path '*/node_modules/*' )
-          # nvim $query +NERDTreeToggle
+          nvim $query +NERDTreeToggle
           openVim
       fi
       cd
@@ -218,7 +218,8 @@ od() {
 openVim() {
     query=$(find . -name package.json ! -path '*/node_modules/*' )
     if  [[ -n "${query// /}" ]]; then
-        nvim $query +NERDTreeToggle
+        # nvim $query +NERDTreeToggle
+        echo $query
     else
         echo 'No package.json found'
     fi
@@ -258,7 +259,7 @@ openVim() {
 # ==============================================================================
 
 
-rll
+#rll
     # if [[ $- == *i* && $0 == '/bin/zsh' ]]; then
     # fi
     

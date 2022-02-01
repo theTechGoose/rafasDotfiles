@@ -1,0 +1,2 @@
+Plug 'edluffy/specs.nvim'
+
