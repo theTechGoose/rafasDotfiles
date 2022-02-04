@@ -250,8 +250,14 @@ openVim() {
 
     rll() {
         pkill node
-        ( node ./.config/limelight.js&>/dev/null &)
+        pkill limelight
+        (node ./.config/limelight.js)&
+        disown
     }
+
+listProcesses() {
+    ps aux | grep yabai
+}
 
 # }}}
 

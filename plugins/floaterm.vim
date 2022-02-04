@@ -1,3 +1,5 @@
+Plug 'liuchengxu/vim-clap'
+Plug 'voldikss/clap-floaterm'
 Plug 'voldikss/vim-floaterm'
 
 let g:floaterm_keymap_next   = '<F2>'
@@ -13,6 +15,10 @@ let g:floaterm_width=0.85
 let g:floaterm_height=0.855
 let g:floaterm_wintitle=0
 let g:floaterm_autoclose=1
+
+
+" normal mode mapping
+tnoremap <leader><leader> <C-\><C-n>  
 
 augroup FloatermCustomisations
     autocmd!
