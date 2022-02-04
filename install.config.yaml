@@ -6,6 +6,7 @@
 - create: 
   - ~/.config
   - ~/.config/nvim
+  - ~/vimwiki
   - ~/.local
   - ~/.local/share
 
@@ -27,6 +28,7 @@
     ~/.skhdrc: .skhdrc
     ~/.config/nvim/coc-settings.json: coc-settings.json
     ~/.config/limelight.js: limelight.js
+    ~/vimwiki/index.wiki: index.wiki
     ~/.config/coc/ultisnips: 
       path: ultisnips
       force: true
