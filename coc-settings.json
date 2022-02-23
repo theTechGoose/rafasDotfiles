@@ -14,7 +14,13 @@
     "diagnostic-languageserver.mergeConfig": true,
     "diagnostic-languageserver.linters": {
         "phpcs": {
-            "args": [ "--standard=PSR12", "--exclude=Generic.Files.LineLength.TooLong", "--report=emacs", "-s", "-" ]
+            "args": [
+                "--standard=PSR12",
+                "--exclude=Generic.Files.LineLength.TooLong",
+                "--report=emacs",
+                "-s",
+                "-"
+            ]
         }
     },
     "git.enableGutters": true,
@@ -25,9 +31,8 @@
     "git.changeRemovedSign.text": "▔",
     "phpls.path": "/usr/local/bin/intelephense",
     "php-cs-fixer.config": ".php-cs-fixer.dist.php",
-    "php-c-fixer.enableFormatProvider": true,
     "intelephense.environment.phpVersion": "8",
     "tailwindCSS.validate": true,
     "tailwindCSS.emmetCompletions": true,
-    "prettier.requireConfig": true
+    "jedi.markupKindPreferred": "markdown"
 }

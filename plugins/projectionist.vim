@@ -1,20 +1,66 @@
 Plug 'tpope/vim-projectionist'
 
 let g:projectionist_heuristics = {
-    \  "src/app/*": {
-    \  "src/app/*.ts": {
-    \  "alternate":"src/app/{}.scss"
+    \"src/app/components/*": {
+        \"src/app/components/*.ts": {
+            \"alternate":"src/app/components/{}.scss"
+        \},
+        \"src/app/components/*.scss": {
+            \"alternate":"src/app/components/{}.spec.ts"
+        \},
+        \"src/app/components/*.spec.ts": {
+            \"alternate":"src/app/components/{}.html"
+        \},
+        \"src/app/components/*.html": {
+            \"alternate":"src/app/components/{}.ts"
+        \}
     \},
-\  "src/app/*.scss": {
-\  "alternate":"src/app/{}.spec.ts"
-\},
-\  "src/app/*.spec.ts": {
-\  "alternate":"src/app/{}.html"
-\},
-\  "src/app/*.html": {
-\  "alternate":"src/app/{}.ts"
-\}
-  \}
+    \"src/app/services/*": {
+        \"src/app/services/*.ts": {
+            \ "alternate":"src/app/services/{}.spec.ts"
+        \},
+        \"src/app/services/*.spec.ts": {
+            \ "alternate":"src/app/services/{}.ts"
+        \},
+    \},
+    \"src/app/directives/*": {
+        \"src/app/directives/*.ts": {
+            \ "alternate":"src/app/directives/{}.spec.ts"
+        \},
+        \"src/app/directives/*.spec.ts": {
+            \ "alternate":"src/app/directives/{}.ts"
+        \},
+    \},
+    \"src/app/pipes/*": {
+        \"src/app/pipes/*.ts": {
+            \ "alternate":"src/app/pipes/{}.spec.ts"
+        \},
+        \"src/app/pipes/*.spec.ts": {
+            \ "alternate":"src/app/pipes/{}.ts"
+        \},
+    \},
+    \"src/helpers/*": {
+        \"src/helpers/*.ts": {
+            \ "alternate": "src/helpers/{}.spec.ts"
+        \},
+        \"src/helpers/*.spec.ts": {
+            \"alternate": "src/helpers/{}.json"
+        \},
+        \"src/helpers/*.json":{ 
+            \"alternate": "src/helpers/{}.ts"
+        \}
+    \},
+    \"src/entrypoints/*": {
+        \"src/entrypoints/*.ts": {
+            \ "alternate": "src/entrypoints/{}.spec.ts"
+        \},
+        \"src/entrypoints/*.spec.ts": {
+            \"alternate": "src/entrypoints/{}.json"
+        \},
+        \"src/entrypoints/*.json":{ 
+            \"alternate": "src/entrypoints/{}.ts"
+        \}
+    \}
 \}
 
 nnoremap <leader>; :A<cr>

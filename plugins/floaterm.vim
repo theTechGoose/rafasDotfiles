@@ -3,11 +3,13 @@ Plug 'voldikss/clap-floaterm'
 Plug 'voldikss/vim-floaterm'
 
 let g:floaterm_keymap_next   = '<F2>'
-let g:floaterm_keymap_toggle  = '<leader>tt'
+let g:floaterm_keymap_toggle  = '<C-space>'
 let g:floaterm_keymap_prev   = '<F3>'
 let g:floaterm_keymap_new    = '<F4>'
 "nnoremap <F1> :call CloseNerdTreeAndOpenTerminal()<CR>
 tnoremap <silent> <F1> <C-\><C-n>:FloatermToggle<CR>
+
+
 
 let g:floaterm_gitcommit='floaterm'
 let g:floaterm_autoinsert=1

@@ -6,6 +6,9 @@ let g:nnn#set_default_mappings = 0
 nnoremap <silent> <leader>n :call nnn#pick(expand('%p:h'))<CR>
 nnoremap <silent> <leader>N :NnnPicker<CR>
 let g:nnn#layout = { 'left': '~30%' }
+let g:nnn#action = {
+      \ '<c-j>': 'split',
+      \ '<c-k>': 'vsplit' }
 
 
 

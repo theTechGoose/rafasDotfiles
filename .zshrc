@@ -85,6 +85,8 @@ compinit
 
  export NNN_OPTS="H"
  export ANDROID_HOME="$HOME/Android/Sdk/"
+ export EDITOR=nvim
+ export VISUAL=$EDITOR
 
     export GIT_EDITOR=vim
 
@@ -98,6 +100,7 @@ compinit
         ${ANDROID_HOME}tools/
         ${ANDROID_HOME}platform-tools/
         $path
+
     )
 
     setopt auto_cd
@@ -133,6 +136,20 @@ compinit
     homestead() {
         ( cd ~/Homestead && vagrant $* )
     }
+
+function restart-yabai() {
+    node ./.config/yabaiStart.js&
+}
+
+function img-data() {
+  TYPE=$(file --mime-type -b $1)
+  ENC=$(base64 $1)
+  echo "data:$TYPE;base64,$ENC"
+}
+
+rc() {
+    source ~/.zshrc
+}
 
     # Git
     alias g="git"
@@ -255,8 +272,16 @@ openVim() {
         disown
     }
 
+createNotebook() {
+    python3 -m jupyter_ascending.scripts.make_pair --base $1
+}
+
 listProcesses() {
     ps aux | grep yabai
+}
+
+qt() {
+    quicktype $1 -o $2 --just-types
 }
 
 # }}}
@@ -285,3 +310,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+export PATH="~/.pyenv/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export NEOVIDE_FRAMELESS=true

@@ -1,0 +1,519 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+
+
+snippet plopfile "creates the default plop file"
+const config = (plop) => {
+  const baseTestingTemplate =
+    '\nimport { {{camelCase name}} } from "./{{dashCase name}}" \n\n//<--Import End--> \n\n//<--Variable Definition End-->\n\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Tests-->\n\ndescribe(" {{titleCase name}} ", () => {\n  it("Should load without crashing", () => {\n    const res = {{camelCase name}}()\n    expect(res).toBeTruthy()\n  }) \n}) ';
+
+  const baseHelperTemplate =
+    "\n//<--Import End--> \n \n//<--Variable Definition End-->\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Exports-->\n\nexport function {{camelCase name}}() {}";
+
+  const basePublicApiAppendTemplate =
+    'export { {{camelCase name}} } from "./{{dashCase name}}/{{dashCase name}}"';
+
+  // -----------------------------------------------------------------------------
+
+  const testingEntrypointTemplate =
+    '\nimport { {{camelCase name}} } from "./{{dashCase name}}" \n\n//<--Import End--> \n\n//<--Variable Definition End-->\n\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Tests-->\n\ndecribe("{{titleCase name}}", () => {\n  it("Should load without crashing", () => {\n    const res = {{camelCase name}}()\n    expect(res).toBeTruthy()\n  }) \n}) ';
+
+  const entrypointTemplate =
+    "import * as helpers from '../../helpers/'\n//<--Import End-->\n\nhelpers.fixNeverReadError()\n//<--Variable Definition End-->\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Exports-->\n\nexport function {{camelCase name}}(){}\n\n";
+
+  // -----------------------------------------------------------------
+
+  const fTestingEntrypointTemplate =
+    '\nimport { _{{camelCase name}} } from "./{{dashCase name}}" \n\n//<--Import End--> \n\n//<--Variable Definition End-->\n\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Tests-->\n\ndecribe("{{titleCase name}}", () => {\n  it("Should load without crashing", () => {\n    const res = _{{camelCase name}}()\n    expect(res).toBeTruthy()\n  }) \n}) ';
+
+  const fEntrypointTemplate =
+    "import * as helpers from '../../helpers/'\nimport * as functions from 'firebase-functions'\n//<--Import End--> \n \nhelpers.fixNeverReadError()\n//<--Variable Definition End-->\n\n/******Psudo Start******\n\n{{psudo}}\n/******Psudo End******/\n\n//<--Exports-->\n\nexport function _{{camelCase name}}(){}\n\nexport const {{camelCase name}} = functions.https.onRequest(() => {\n const res = _{{camelCase name}}()\n})";
+
+  const interfacesPath = "interfaces.d.ts";
+  const readmePath = "README.md";
+  plop.setActionType("ng", function (answers, config) {
+    const { execSync } = require("child_process");
+    const processedName = answers.name
+      .split(" ")
+      .map((a, i) => {
+        return a.toLowerCase();
+      })
+      .join("-");
+    if (config.kind === "helper") {
+      const finalName =
+        answers.type !== "component"
+          ? \`\${processedName}/\${processedName}\`
+          : processedName;
+      execSync(\`ng g \${answers.type} \${answers.type}s/\${finalName}\`);
+    } else {
+      execSync(\`ng g component pages/\${processedName}\`);
+    }
+  });
+  plop.setGenerator("ng-page", {
+    description: "Generate a new Angular Page",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the name of the page?",
+      },
+      {
+        type: "input",
+        name: "description",
+        message: "What is the description of the page?",
+      },
+    ],
+    actions: [
+      {
+        type: "ng",
+        kind: "page",
+      },
+      {
+        type: "modify",
+        pattern: /\n@/,
+        template:
+          "import * as services from '../../services'\nimport * as interfaces from '../../../../interfaces.d'\nservices.fixNeverReadError(interfaces)\n\n/*****Description*****\n\n{{description}}\n********************/\n\n@",
+        path: "src/app/pages/{{dashCase name}}/{{dashCase name}}.component.ts",
+      },
+      {
+        type: "add",
+        path: readmePath,
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: readmePath,
+        template: "### {{dashCase name}} UI:PAGE \n>{{description}}",
+      },
+      {
+        type: "add",
+        path: "src/app/services/index.ts",
+        skipIfExists: true,
+      },
+      {
+        type: "modify",
+        // pattern: /\nconst routes: Routes = \[\];/,
+        // template:
+        //   "import * as rawPages from 'pages'\n\nconst pageRoutes = Object.keys(rawPages).map(rawPage => {\nreturn {\npath: '{{lowerCase name}},'\n component: rawPage.{{pascalCase name}}Component}\n})\nconst routes: Routes = [pageRoutes];",
+        transform(txt) {
+          if (txt.includes("pageRoutes")) return txt;
+          const splitBy = "\nconst routes: Routes = [];";
+          const joinString =
+            "import * as rawPages from './pages'\n\nconst pageRoutes = Object.keys(rawPages).map(rawPage => {\n//@ts-ignore\nconst component = rawPages[rawPage] as any; \n  return {\n    path: rawPage.toLowerCase(),\n    component\n}\n}) as any\nconst routes: Routes = [...pageRoutes];";
+          const splitString = txt.split(splitBy);
+          return splitString.join(joinString);
+        },
+        path: "src/app/app-routing.module.ts",
+      },
+      {
+        type: "add",
+        path: "src/app/pages/index.ts",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "src/app/pages/index.ts",
+        template:
+          "export { {{pascalCase name}}Component } from './{{dashCase name}}/{{dashCase name}}.component';",
+      },
+    ],
+  });
+
+  plop.setGenerator("ng-helper", {
+    description: "Angular Generator Extension",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the name of the component?",
+      },
+      {
+        type: "list",
+        name: "type",
+        message: "What type of component do you want to create?",
+        choices: ["component", "service", "directive", "pipe"],
+      },
+      {
+        type: "editor",
+        name: "psudo",
+        message: "type out the steps needed for this code",
+      },
+      {
+        type: "editor",
+        name: "interfaces",
+        message: "define the interfaces for this file",
+      },
+    ],
+    actions: [
+      {
+        type: "ng",
+        kind: "helper",
+      },
+      {
+        type: "add",
+        path: "src/app/services/index.ts",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "src/app/services/index.ts",
+        template:
+          "export { {{pascalCase name}}Service } from './{{dashCase name}}/{{dashCase name}}.service';",
+        skip(answers) {
+          const isNotService = answers.type !== "service";
+          if (isNotService) return "Is Not Service";
+        },
+      },
+      {
+        type: "modify",
+        path: "src/app/services/index.ts",
+        transform: (txt) => {
+          const payload =
+            "export function fixNeverReadError(...args: any) {\nreturn args;\n}";
+          if (!txt.includes(payload)) return \`\${payload}\n\n\${txt}\`;
+          return txt;
+        },
+      },
+      {
+        type: "modify",
+        pattern: /\n@/,
+        template:
+          "import * as services from '../../services'\nimport * as interfaces from '../../../../interfaces.d'\nservices.fixNeverReadError(interfaces)\n\n/*****Description*****\n\n{{psudo}}\n********************/\n\n@",
+        path: "src/app/{{type}}s/{{dashCase name}}/{{dashCase name}}.{{type}}.ts",
+      },
+      {
+        type: "add",
+        path: interfacesPath,
+        tempate: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: interfacesPath,
+        template: "{{interfaces}}",
+      },
+      {
+        type: "add",
+        path: readmePath,
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: readmePath,
+        template: "### {{dashCase name}} UI:{{upperCase type}}\n\n {{psudo}}",
+      },
+    ],
+  });
+  // --------------------------------------------------- remove if bugs
+
+  plop.setGenerator("helper", {
+    description: "this is a skeleton plopfile",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the file name",
+      },
+      {
+        type: "editor",
+        name: "psudo",
+        message: "type out the steps needed for this code",
+      },
+      {
+        type: "editor",
+        name: "interfaces",
+        message: "define the interfaces for this file",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
+        path: "src/helpers/{{dashCase name}}/{{dashCase name}}.ts",
+        template: baseHelperTemplate,
+      },
+      {
+        type: "add",
+        path: "src/helpers/{{dashCase name}}/{{dashCase name}}.spec.ts",
+        template: baseTestingTemplate,
+      },
+      {
+        type: "add",
+        path: "src/helpers/testy.ts",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "modify",
+        transform: (txt) => {
+          const payload = "export function fixNeverReadError() {}";
+          if (!txt.includes(payload)) return \`\${payload}\n\n\${txt}\`;
+          return txt;
+        },
+        path: "src/helpers/index.ts",
+      },
+      {
+        type: "append",
+        path: "src/helpers/index.ts",
+        template: basePublicApiAppendTemplate,
+      },
+      {
+        type: "add",
+        path: interfacesPath,
+        tempate: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: interfacesPath,
+        separator: "\n",
+        template: "{{interfaces}}",
+      },
+      {
+        type: "add",
+        path: "README.md",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "README.md",
+        template: "### {{dashCase name}} LOCAL:HELPER\n\n {{psudo}}",
+      },
+    ], // array of actions
+  });
+
+  plop.setGenerator("entrypoint", {
+    description: "this is a skeleton entrypoint",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the file name",
+      },
+      {
+        type: "editor",
+        name: "psudo",
+        message: "type out the steps needed for this code",
+      },
+      {
+        type: "editor",
+        name: "interfaces",
+        message: "define the interfaces for this file",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
+        path: "src/entrypoints/{{dashCase name}}/{{dashCase name}}.ts",
+        template: entrypointTemplate,
+      },
+      {
+        type: "add",
+        path: "src/entrypoints/{{dashCase name}}/{{dashCase name}}.spec.ts",
+        template: testingEntrypointTemplate,
+      },
+      {
+        type: "add",
+        path: "src/entrypoints/index.ts",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "src/entrypoints/index.ts",
+        template: basePublicApiAppendTemplate,
+      },
+      {
+        type: "add",
+        path: interfacesPath,
+        template: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: interfacesPath,
+        template: "{{interfaces}}",
+      },
+      {
+        type: "add",
+        path: "README.md",
+        tempalte: "{ }",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "README.md",
+        template: "### {{dashCase name}} LOCAL:ENTRYPOINT\n\n {{psudo}}",
+      },
+    ], // array of actions
+  });
+
+  plop.setGenerator("f-helper", {
+    description: "this is a skeleton for a firebase function helper",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the file name",
+      },
+      {
+        type: "editor",
+        name: "psudo",
+        message: "type out the steps needed for this code",
+      },
+      {
+        type: "editor",
+        name: "interfaces",
+        message: "define the interfaces for this file",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
+        path: "functions/src/helpers/{{dashCase name}}/{{dashCase name}}.ts",
+        template: baseHelperTemplate,
+      },
+      {
+        type: "add",
+        path: "functions/src/helpers/{{dashCase name}}/{{dashCase name}}.spec.ts",
+        template: baseTestingTemplate,
+      },
+      {
+        type: "add",
+        path: "functions/src/helpers/index.ts",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "modify",
+        transform: (txt) => {
+          const payload = "export function fixNeverReadError() {}";
+          if (!txt.includes(payload)) return \`\${payload}\n\n\${txt}\`;
+          return txt;
+        },
+        path: "functions/src/helpers/index.ts",
+      },
+      {
+        type: "append",
+        path: "functions/src/helpers/index.ts",
+        template: basePublicApiAppendTemplate,
+      },
+      {
+        type: "add",
+        path: "README.md",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "README.md",
+        template: "### {{dashCase name}} REMOTE:HELPER\n\n {{psudo}}",
+      },
+      {
+        type: "add",
+        path: interfacesPath,
+        template: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: interfacesPath,
+        template: "{{interfaces}}",
+      },
+    ], // array of actions
+  });
+  plop.setGenerator("f-entrypoint", {
+    description: "this is a skeleton plopfile",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "What is the file name",
+      },
+      {
+        type: "editor",
+        name: "psudo",
+        message: "type out the steps needed for this code",
+      },
+      {
+        type: "editor",
+        name: "interfaces",
+        message: "define the interfaces for this file",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
+        path: "functions/src/entrypoints/{{dashCase name}}/{{dashCase name}}.ts",
+        template: fEntrypointTemplate,
+      },
+      {
+        type: "add",
+        path: "functions/src/entrypoints/{{dashCase name}}/{{dashCase name}}.spec.ts",
+        template: fTestingEntrypointTemplate,
+      },
+      {
+        type: "add",
+        path: "functions/src/entrypoints/index.ts",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "functions/src/entrypoints/index.ts",
+        template: basePublicApiAppendTemplate,
+      },
+      {
+        type: "add",
+        path: interfacesPath,
+        template: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: interfacesPath,
+        template: "{{interfaces}}",
+      },
+      {
+        type: "add",
+        path: "README.md",
+        tempalte: "",
+        skipIfExists: true,
+      },
+      {
+        type: "append",
+        path: "README.md",
+        template: "### {{dashCase name}} REMOTE:ENTRYPOINT\n\n {{psudo}}",
+      },
+    ], // array of actions
+  });
+};
+
+module.exports = config;
+endsnippet

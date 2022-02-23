@@ -11,6 +11,7 @@ let g:coc_global_extensions = [
     \ 'coc-json',
     \ 'coc-pairs',
     \ 'coc-sh',
+    \ 'coc-jedi',
     \ 'coc-snippets',
     \ 'coc-svg',
     \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
@@ -32,6 +33,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+
  " Use leader c to trigger completion.
 inoremap <silent><expr> <leader>gi coc#refresh()
 
@@ -42,8 +44,8 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>h <Plug>(coc-diagnostic-prev-error)
+nmap <silent> <leader>l <Plug>(coc-diagnostic-next-error)
 nmap <silent> <leader>d <Plug>(coc-diagnostic-info)
 
 " GoTo code navigation.
@@ -114,7 +116,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-nmap <leader>l :CocFzfList<cr>
+"nmap <leader>l :CocFzfList<cr>
 
 :function Show_documentation()
 if (index(['vim','help'], &filetype) >= 0)
