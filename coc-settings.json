@@ -1,38 +1,71 @@
 {
-    "coc.preferences.extensionUpdateCheck": "daily",
-    "coc.preferences.formatOnType": true,
-    "diagnostic.checkCurrentLine": true,
-    "diagnostic.virtualText": true,
-    "diagnostic.enableMessage": "jump",
-    "diagnostic.errorSign": "✖",
-    "diagnostic.warningSign": "⚠",
-    "diagnostic.infoSign": "•",
-    "diagnostic.hintSign": "•",
-    "diagnostic-languageserver.filetypes": {
-        "php": ["phpstan", "phpcs"]
-    },
-    "diagnostic-languageserver.mergeConfig": true,
-    "diagnostic-languageserver.linters": {
-        "phpcs": {
-            "args": [
-                "--standard=PSR12",
-                "--exclude=Generic.Files.LineLength.TooLong",
-                "--report=emacs",
-                "-s",
-                "-"
-            ]
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.formatOnType": true,
+  "suggest.enablePreselect": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualText": true,
+  "diagnostic.enableMessage": "jump",
+  "diagnostic.errorSign": "✖",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
+  "diagnostic-languageserver.filetypes": {
+    "php": ["phpstan", "phpcs"]
+  },
+  "diagnostic-languageserver.mergeConfig": true,
+  "diagnostic-languageserver.linters": {
+    "phpcs": {
+      "args": [
+        "--standard=PSR12",
+        "--exclude=Generic.Files.LineLength.TooLong",
+        "--report=emacs",
+        "-s",
+        "-"
+      ]
+    }
+  },
+  "git.enableGutters": true,
+  "git.addedSign.text": "┃",
+  "git.changedSign.text": "┃",
+  "git.removedSign.text": "▁",
+  "git.topRemovedSign.text": "▔",
+  "git.changeRemovedSign.text": "▔",
+  "phpls.path": "/usr/local/bin/intelephense",
+  "tsserver.trace.server": "verbose",
+  "php-cs-fixer.config": ".php-cs-fixer.dist.php",
+  "php-c-fixer.enableFormatProvider": true,
+  "intelephense.environment.phpVersion": "8",
+  "tailwindCSS.dashForceCompletions": false,
+  "tailwindCSS.validate": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "typescript",
+    "html",
+    "scss"
+  ],
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  },
+  "prettier.requireConfig": true,
+  "languageserver": {
+    "lua": {
+      "command": "lua-language-server",
+      "args": ["-E"],
+      "filetypes": ["lua"],
+      "settings": {
+        "Lua": {
+          "workspace.library": {
+            "/usr/share/nvim/runtime/lua": true,
+            "/usr/share/nvim/runtime/lua/vim": true,
+            "/usr/share/nvim/runtime/lua/vim/lsp": true
+          },
+          "diagnostics": {
+            "globals": ["vim"]
+          }
         }
-    },
-    "git.enableGutters": true,
-    "git.addedSign.text": "┃",
-    "git.changedSign.text": "┃",
-    "git.removedSign.text": "▁",
-    "git.topRemovedSign.text": "▔",
-    "git.changeRemovedSign.text": "▔",
-    "phpls.path": "/usr/local/bin/intelephense",
-    "php-cs-fixer.config": ".php-cs-fixer.dist.php",
-    "intelephense.environment.phpVersion": "8",
-    "tailwindCSS.validate": true,
-    "tailwindCSS.emmetCompletions": true,
-    "jedi.markupKindPreferred": "markdown"
+      }
+    }
+  }
 }

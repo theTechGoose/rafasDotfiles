@@ -7,20 +7,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
+          # /$$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$ 
+        # | $$__  $$ /$$__  $$| $$_____//$$__  $$
+        # | $$  \ $$| $$  \ $$| $$     | $$  \ $$
+        # | $$$$$$$/| $$$$$$$$| $$$$$  | $$$$$$$$
+        # | $$__  $$| $$__  $$| $$__/  | $$__  $$
+        # | $$  \ $$| $$  | $$| $$     | $$  | $$
+        # | $$  | $$| $$  | $$| $$     | $$  | $$
+        # |__/  |__/|__/  |__/|__/     |__/  |__/
+          #   /$$    /$$ /$$$$$$ /$$      /$$       
+          #  | $$   | $$|_  $$_/| $$$    /$$$       
+          #  | $$   | $$  | $$  | $$$$  /$$$$       
+          #  |  $$ / $$/  | $$  | $$ $$/$$ $$       
+          #   \  $$ $$/   | $$  | $$  $$$| $$       
+          #    \  $$$/    | $$  | $$\  $ | $$       
+          #     \  $/    /$$$$$$| $$ \/  | $$       
+          #      \_/    |______/|__/     |__/       
 #
-#                                    ________
-#                                  |\\W#####M\
-#                                  |M\\W#####M\
-#                                  |#M\\W#####M\
-#                                  |##M\\W#####M\
-#                                  A###M\\W#####M\
-#                         _______,a#####M|\W#####M\
-#                         \W############W  \W#####M\
-#                          \W##########W    \W#####M\
-#                           'YW#####W7'      \W#####M\
-#                              ¯¯¯¯¯          ¯¯¯¯¯¯¯¯
-#
-#           Personal .zshrc file of Jess Archer <jess@jessarcher.com>
+#           Personal .zshrc file of Rafa Castro <Rafac@monsterrg.com>
 #
 
 # Plugins {{{
@@ -127,6 +132,17 @@ compinit
 
 # Aliases & Functions {{{
 # ==============================================================================
+
+
+createJypNotebook() {
+python3 -m jupyter_ascending.scripts.make_pair --base $1
+}
+
+
+redrawBorders() {
+    yabai -m config window_border off
+    yabai -m config window_border on
+}
 
     # Laravel
     alias a="artisan"
@@ -316,3 +332,15 @@ fi
 export PATH="~/.pyenv/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export NEOVIDE_FRAMELESS=true
+-e 
+alias luamake=/Users/goose/.cache/nvim/nlua/sumneko_lua/lua-language-server/3rd/luamake/luamake
+
+# bun completions
+[ -s "/Users/goose/.bun/_bun" ] && source "/Users/goose/.bun/_bun"
+
+# bun
+export BUN_INSTALL="/Users/goose/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

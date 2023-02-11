@@ -1,30 +1,42 @@
-"                                    ________
-"                                  |\\#######\
-"                                  |#\\#######\
-"                                  |##\\#######\
-"                                  |###\\#######\
-"                                  #####\\#######\
-"                         _______,#######|\#######\
-"                         \W############W  \#######\
-"                          \W##########W    \#######\
-"                           '#########'      \#######\
-"                              ¯¯¯¯¯          ¯¯¯¯¯¯¯¯
-"
-"       Personal vim configuration of Jess Archer <jess@jessarcher.com>
+          " /$$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$ 
+        " | $$__  $$ /$$__  $$| $$_____//$$__  $$
+        " | $$  \ $$| $$  \ $$| $$     | $$  \ $$
+        " | $$$$$$$/| $$$$$$$$| $$$$$  | $$$$$$$$
+        " | $$__  $$| $$__  $$| $$__/  | $$__  $$
+        " | $$  \ $$| $$  | $$| $$     | $$  | $$
+        " | $$  | $$| $$  | $$| $$     | $$  | $$
+        " |__/  |__/|__/  |__/|__/     |__/  |__/
+          "   /$$    /$$ /$$$$$$ /$$      /$$       
+          "  | $$   | $$|_  $$_/| $$$    /$$$       
+          "  | $$   | $$  | $$  | $$$$  /$$$$       
+          "  |  $$ / $$/  | $$  | $$ $$/$$ $$       
+          "   \  $$ $$/   | $$  | $$  $$$| $$       
+          "    \  $$$/    | $$  | $$\  $ | $$       
+          "     \  $/    /$$$$$$| $$ \/  | $$       
+          "      \_/    |______/|__/     |__/       
+
+"       Personal vim configuration of Rafa Castro <Rafac@monsterrg.com>
 
 "--------------------------------------------------------------------------
 " General settings
 "--------------------------------------------------------------------------
-set shiftwidth=4
+set shiftwidth=2
 set hidden
+set mmp=5000
+set re=0
 set signcolumn=yes:2
-set relativenumber
+set switchbuf=useopen
 set number
+set shiftround
+set shortmess+=F
 set guifont=PragmataProMonoLiga\ Nerd\ Font:h17
 set termguicolors
 hi Cursor guifg=#F8F8F8 guibg=#A7A7A7
 set undofile
 set spell
+set autoindent
+set cindent
+set expandtab
 set title
 set ignorecase
 set smartcase
@@ -58,7 +70,7 @@ set wildcharm=<tab> "set to trigger auto complete in buffer script
 "--------------------------------------------------------------------------
 
 let mapleader = "\\"
-nmap <S-CR> :wq<CR>
+"nmap <S-CR> :wq<CR>
 nmap <space> <leader>
 vmap <space> <leader>
 
@@ -66,9 +78,12 @@ nmap <leader>ve :edit  ~/.config/nvim/init.vim<cr>
 nmap <leader>vc :edit ~/.config/nvim/coc-settings.json<cr>
 nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
 nmap <leader>vz :edit ~/.zshrc<cr>
+nmap <leader>vs :CocRestart <cr><cr>
+inoremap <Esc> <Esc><C-c>
 
-nmap <bs> :call ClearHighlight()<cr>
+nmap <leader>sh :call ClearHighlight()<cr>
 nmap <leader>Q :bufdo bdelete<cr>
+nmap <leader>. :call CocAction('activeExtension', 'coc-angular')<cr>
 
 :function ClearHighlight()
 call feedkeys( ":nohlsearch\<CR>" )
@@ -76,7 +91,18 @@ call feedkeys( ":nohlsearch\<CR>" )
 :endfunction
 
 " Allow gf to open non-existent files
- nnoremap <leader>o :edit <cfile><cr>
+nnoremap <leader>o :edit <cfile><cr>
+nnoremap <leader>cp :Copilot panel<cr>
+
+
+" remap copilot accept
+inoremap <silent><script><expr><C-k> copilot#Accept("\<CR>")
+
+" remap split movement
+" nnoremap <leader>h <C-w>h
+" nnoremap <leader>l <C-w>l
+" nnoremap <leader>j <C-w>j
+" nnoremap <leader>k <C-w>k
 
 " Reselect visual selection after indenting
 vnoremap < <gv
@@ -110,8 +136,6 @@ vmap <leader>jk <esc>
 
 " Easy insertion of a trailing ; or , from insert mode
 imap ;; <Esc>A;<Esc>
-imap ,, <Esc>A,<Esc>
-imap :: <Esc>A:
 
 cmap w!! %!sudo tee > /dev/null %
 
@@ -119,14 +143,9 @@ cmap w!! %!sudo tee > /dev/null %
 nnoremap ' `
 nnoremap ` '
 
-" remap split movement
-nnoremap <c-h> <C-w>h
-nnoremap <c-l> <C-w>l
-nnoremap <c-j> <C-w>j
-nnoremap <c-k> <C-w>k
 
 " remap save
-nnoremap <leader>ww :w!<CR>
+nnoremap <leader>ww :silent! w <bar> %bd <bar> e# <bar> bd# <CR>
 nnoremap <leader>w <C-w>q
 nnoremap <leader>w <C-w>=
 
@@ -137,23 +156,28 @@ nnoremap <leader>wq <C-w>q
 " single char sneak, multiline f
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
+map s <Plug>Sneak_s
+map S <Plug>Sneak_S
+" map f :lua require'lightspeed'.ft:go({})<Cr>
+" map F :lua require'lightspeed'.ft:go({ ['reverse?'] = true })<Cr>
 
 " add a console.log with debug statements
 nnoremap <leader>sp :call print_debug#print_debug()<cr>
 
 " quit all 
-nnoremap <leader>sq :wqall!<cr>
+nnoremap <leader>qa :qall!<cr>
 
 "quit window
 nnoremap <leader>swq <C-w>q
 
 
 " remap esc to leader e
-vnoremap <space><space> <esc>
-nnoremap <esc> <nop>
+vnoremap a <esc>
+" nnoremap <esc> <nop>
 
 " Preseve clipboard when deleting single characters
 nnoremap x "_x
+nnoremap X "_X
 
 " map Whiplash
 nnoremap <leader>wip :Whiplash <Tab>
@@ -170,7 +194,7 @@ nnoremap <leader>pp :Prettier<CR>
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>pc :PlugClean<CR>
 
-"get file path
+"get ffunction(a) ile path
 nnoremap <leader>gp :CopyBuffer<CR>
 :command! CopyBuffer let @+ = expand('%:p')
 
@@ -192,6 +216,7 @@ inoremap ( (<C-g>u
 inoremap { {<C-g>u
 inoremap , ,<C-g>u
 inoremap ; ;<C-g>u
+inoremap  <Space><C-g>u
 
 "goto url
 nnoremap <leader>gu :call Navigate()<cr>
@@ -201,7 +226,7 @@ echom g:navUrl
 :silent exec "! open "."'".g:navUrl."'"
 endfunction
 
-" Twilight toggling
+" Toremap <C-j> <C-wilight toggling
 nnoremap <leader>tw :Twilight<CR>
 
 "move highlighted line
@@ -209,17 +234,57 @@ vnoremap J :m '>+1'<CR>gv=gv
 vnoremap K :m '<-2'<CR>gv=gv
 
 " easier %
-nnoremap <space><space> %
+nnoremap <space><space> *
+vnoremap <space><space> *
+
 
 " move to bottom of the file if already at the top
 
+"command line editing
+cnoremap <C-O>      <Up>
 
+" move between panes
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 
+" delete empty lines
+vnoremap <leader>de :g/^$/d<cr>
+
+" show type in insert mode
+inoremap <silent> ,s <C-r>=CocActionAsync('showSignatureHelp')<CR>
 
 source ~/.config/nvim/autoCorrect.vim
 
+"#Hardmode
+
+" inoremap <bs> <nop>
+" nnoremap j <nop>
+" nnoremap k <nop>
+" nnoremap l <nop>
+" nnoremap h <nop>
+
+inoremap ,aa () => {<CR>}<esc>ko
+inoremap ,as async () => {<CR>}<esc>ko
+inoremap <C-l> <right>
+
+" Delete inside line;
+nnoremap dil ^d$
+
+"checkmark
+nnoremap <leader>cm i<c-v>u2713
+
+
+"quickfix
+nnoremap <leader>cc :cclose<CR>
+nnoremap <leader>co :copen<CR>
+nnoremap <leader>cn :cnext<CR>
+nnoremap <leader>cl :cprev<CR>
+
+
+
 "fine grained undo control
-"inoremap  <Space><C-g>u
 
 " insert mapping for missing keys bug
 " inoremap ' '
@@ -228,12 +293,6 @@ source ~/.config/nvim/autoCorrect.vim
 " inoremap { {
 " inoremap } }
 
-" Hardmode
-" inoremap <bs> <nop>
-" nnoremap j <nop>
-" nnoremap k <nop>
-" nnoremap l <nop>
-" nnoremap h <nop>
 
 "remap buffer movement
 "map gn :bnext<cr>
@@ -249,10 +308,7 @@ source ~/.config/nvim/autoCorrect.vim
 " Open the current file in the default program
 "nmap <leader>x :!xdg-open %<cr><cr>
 
-" see numbers
-"nnoremap <leader>sn :exe "set relativenumber!<CR> | sleep 1000m | set relativenumber!<CR >"
-
-
+" see numbers nnoremap <leader>sn :exe "set relativenumber!<CR> | sleep 1000m | set relativenumber!<CR >"
 "--------------------------------------------------------------------------
 " Plugins
 "--------------------------------------------------------------------------
@@ -266,40 +322,41 @@ endif
 
 call plug#begin(data_dir . '/plugins')
 
+" source ~/.config/nvim/plugins/symbols-outline.vim
+"source ~/.config/nvim/plugins/hlslens.vim
+"source ~/.config/nvim/plugins/ulTest.vim 
 "source ~/.config/nvim/plugins/which-key.vim
 "source ~/.config/nvim/plugins/vim-shoot.vim
 "source ~/.config/nvim/plugins/arduino.vim
 "source ~/.config/nvim/plugins/context-commentstring.vim
-"source ~/.config/nvim/plugins/dispatch.vim
 "source ~/.config/nvim/plugins/editorconfig.vim
-"source ~/.config/nvim/plugins/ulTest.vim  deprecate
 "source ~/.config/nvim/plugins/eunuch.vim
 "source ~/.config/nvim/plugins/firenvim.vim
 "source ~/.config/nvim/plugins/fugitive.vim
 "source ~/.config/nvim/plugins/heritage.vim
 "source ~/.config/nvim/plugins/lion.vim
 "source ~/.config/nvim/plugins/phpactor.vim
-"source ~/.config/nvim/plugins/splitjoin.vim
-"source ~/.config/nvim/plugins/textobj-xmlattr.vim
+" source ~/.config/nvim/plugins/splitjoin.vim
+" source ~/.config/nvim/plugins/textobj-xmlattr.vim
 "source ~/.config/nvim/plugins/bad-practices.vim
 "source ~/.config/nvim/plugins/nvim-notify.vim
 "source ~/.config/nvim/plugins/vim-escCaps.vim
-"source ~/.config/nvim/plugins/vim-xtract.vim
+" source ~/.config/nvim/plugins/vim-xtract.vim
 "source ~/.config/nvim/plugins/vimspector
 "source ~/.config/nvim/plugins/vim-be-good.vim
 "source ~/.config/nvim/plugins/vimspector.vim
+"source ~/.config/nvim/plugins/paleNight.vim
 "-----------------------------------------------
+  source ~/.config/nvim/plugins/vim-prettier
+  source ~/.config/nvim/plugins/theme.vim
+  source ~/.config/nvim/plugins/dispatch.vim
   source ~/.config/nvim/plugins/airline.vim
   source ~/.config/nvim/plugins/sneak.vim
   source ~/.config/nvim/plugins/coc.vim
-  source ~/.config/nvim/plugins/commentary.vim
-  source ~/.config/nvim/plugins/paleNight.vim
-  source ~/.config/nvim/plugins/exchange.vim
-  source ~/.config/nvim/plugins/floaterm.vim
+  source ~/.config/nvim/plugins/nerdtree.vim
   source ~/.config/nvim/plugins/fzf.vim
   source ~/.config/nvim/plugins/lastplace.vim
   source ~/.config/nvim/plugins/markdown-preview.vim
-  source ~/.config/nvim/plugins/nerdtree.vim
   source ~/.config/nvim/plugins/pasta.vim
   source ~/.config/nvim/plugins/peekaboo.vim
   source ~/.config/nvim/plugins/polyglot.vim
@@ -317,7 +374,6 @@ call plug#begin(data_dir . '/plugins')
   source ~/.config/nvim/plugins/visual-star-search.vim
   source ~/.config/nvim/plugins/vim-typescript
   source ~/.config/nvim/plugins/vim-signature
-  source ~/.config/nvim/plugins/vim-prettier
   source ~/.config/nvim/plugins/vim-copilot
   source ~/.config/nvim/plugins/nvim-treesitter.vim
   source ~/.config/nvim/plugins/vim-closetag.vim
@@ -342,14 +398,33 @@ call plug#begin(data_dir . '/plugins')
   source ~/.config/nvim/plugins/easy-align.vim
   source ~/.config/nvim/plugins/lazygit.vim
   source ~/.config/nvim/plugins/neovide.vim
-
-
+  source ~/.config/nvim/plugins/autopairs.vim
+  source ~/.config/nvim/plugins/autotag.vim
+  source ~/.config/nvim/plugins/sasscomplete.vim
+  source ~/.config/nvim/plugins/scss-syntax.vim
+  source ~/.config/nvim/plugins/indent-object.vim
+  source ~/.config/nvim/plugins/emmet-vim.vim
+  source ~/.config/nvim/plugins/scratch.vim 
+  source ~/.config/nvim/plugins/scrollbar.vim
+  source ~/.config/nvim/plugins/lsp_signature.vim
+  source ~/.config/nvim/plugins/lua-dev.vim
+  source ~/.config/nvim/plugins/floaterm.vim
+  source ~/.config/nvim/plugins/commentary.vim
+  source ~/.config/nvim/plugins/far.vim
+  source ~/.config/nvim/plugins/jsDoc.vim
+  source ~/.config/nvim/plugins/firestore
+  source ~/.config/nvim/plugins/neomake
+  source ~/.config/nvim/plugins/exchange.vim
+  source ~/.config/nvim/plugins/indent-wise.vim
+  
 call plug#end()
 doautocmd User PlugLoaded
+
 
 "--------------------------------------------------------------------------
 " Mini - Plugins
 "--------------------------------------------------------------------------
+
 
 "highlight cursor when jumping
 function s:Cursor_Moved()
@@ -398,21 +473,38 @@ nnoremap gg :call RemapGG()<cr>
 " au BufEnter * :IndentGuidesEnable
 "let g:AutoCloseExpandSpace = 0 " Make iabbrev work again
 au FocusGained,BufEnter * :silent! checktime
-au FocusLost,WinLeave * :silent! w
- au FocusGained,BufEnter * :silent! call RemoveHighlight()
+"au FocusLost,WinLeave * :silent! w
+au FocusGained,BufEnter * :silent! call RemoveHighlight()
 au InsertEnter * set cursorline
 au InsertLeave * set nocursorline
 autocmd BufWritePre *.ts :OR
 autocmd BufEnter * if &filetype == "" | setlocal ft=typescript | endif
+autocmd BufEnter *.html :call CocAction('activeExtension', 'coc-angular')
+
 au BufEnter * set formatoptions-=ro
-
-
-
-" set foldmethod=expr
+au TextChanged,InsertLeave * silent! update
+" set foldmethod=indent
 " set foldexpr=nvim_treesitter#foldexpr()
 " nightfly color scheme
 
-colorscheme nightfly
+"colorscheme dracula
+"colorscheme catppuccin
+
+au FileChangedShellPost * call FCSHandler(expand("<afile>:p"))
+function FCSHandler(name)
+  let msg = 'File "'.a:name.'"'
+  let v:fcs_choice = ''
+  
+  if v:fcs_reason == "deleted"
+          try
+          :silent! execute "bd".a:name
+          echom 'deleted by vimscript on line 463 of vimrc'
+        catch 
+        endtry
+          endif
+endfunction
+
+
 if (has("nvim"))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
@@ -422,8 +514,15 @@ highlight Cursor guifg=Blue guibg=LightGreen
 highlight Visual guifg=Black guibg=White
 
 lua <<EOF
+
+require("scrollbar").setup({
+marks = {
+  Search = { color = "#FF0000"},
+  Error = { color = "#FF0000"},
+  }
+})
+
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained",
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = true,
@@ -486,7 +585,164 @@ expand = {
     }
 
 }
+-----------------------
+
+local remap = vim.api.nvim_set_keymap
+local npairs = require('nvim-autopairs')
+local Rule = require('nvim-autopairs.rule')
+local cond = require('nvim-autopairs.conds')
+npairs.setup({
+map_cr=false,
+ check_ts = true,
+ enable_check_bracket_line = true,
+})
+
+-- skip it, if you use another global object
+_G.MUtils= {}
+
+MUtils.completion_confirm=function()
+  if vim.fn.pumvisible() ~= 0  then
+    return vim.fn["coc#_select_confirm"]()
+  else
+    return npairs.autopairs_cr()
+  end
+end
+
+
+remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    {
+        underline = true,
+        virtual_text = {
+            spacing = 5,
+            severity_limit = 'Warning',
+        },
+        update_in_insert = true,
+    }
+)
+
+
+npairs.add_rules({Rule('<', '', 'html' )})
+
+ cfg = {
+  debug = false, 
+  log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log", 
+  verbose = false, 
+  bind = true, 
+  doc_lines = 10, 
+  floating_window = false, 
+  floating_window_above_cur_line = true, 
+  floating_window_off_x = 1, 
+  floating_window_off_y = 0, 
+  fix_pos = false,  
+  hint_enable = true, 
+  hint_prefix = "🐼 ",  
+  hint_scheme = "String",
+  hi_parameter = "LspSignatureActiveParameter", 
+  max_height = 12, 
+  max_width = 80, 
+  handler_opts = {
+    border = "rounded"   
+  },
+  always_trigger = false, 
+  auto_close_after = nil, 
+  extra_trigger_chars = {}, 
+  zindex = 200, 
+  padding = '', 
+  transparency = nil, 
+  shadow_blend = 36, 
+  shadow_guibg = 'Black', 
+  timer_interval = 200, 
+  toggle_key = '<C-o>', 
+  select_signature_key = nil, 
+}
+
+
+require'lsp_signature'.setup(cfg, 0) 
+
+require('nlua.lsp.nvim').setup(require('lspconfig'), {
+
+  -- Include globals you want to tell the LSP are real :)
+})
+
+
+---------------------
+
+-- require('nvim-autopairs').setup({
+-- check_ts = true,
+-- enable_check_bracket_line = true,
+-- map_cr = true,
+-- })
+
 EOF
-
-
 autocmd FileType json syntax match Comment +\/\/.\+$+
+"inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+
+nnoremap + +
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+inoremap <silent><expr> <leader> coc#pum#visible() ? coc#pum#cancel() : "\<leader>"
+
+" lua << EOF
+"   require('poimandres').setup { }
+" EOF
+
+
+function! NxBuildCompletion(A, L, P)
+  " Generate a list of available project names by running the `nx list` command
+  let app_name = system('npx nx affected:apps --all --plain')
+  let lib_name = system('npx nx affected:libs --all --plain')
+  let project_names = split(app_name.' '.lib_name, ' ')
+  "remove all non letter or number characters
+  let project_names = map(project_names, 'substitute(v:val, "[^a-zA-Z0-9 -]", "", "g")')
+  " Return the filtered list as the completion options
+  set makeprg=try
+  return project_names
+endfunction
+
+function! GoToFile(filename)
+  let wd = getcwd()
+  let filepath = wd . '/' . a:filename
+  let ouput =  ':edit ' . findfile(filepath, '.;')
+  execute ouput
+endfunction
+
+function! DoBuild(project) 
+  call GoToFile('README.md')
+  exec 'make '.a:project
+  copen
+endfunction
+
+command! -nargs=1 -complete=customlist,NxBuildCompletion NxBuild call DoBuild(<f-args>)
+
+function! DrawScopeBorder()
+  " Get the current cursor position and line number
+  let cursor_pos = getpos(".")
+  let line_num = cursor_pos[1]
+
+  " Use tree sitter to parse the current file
+  call tree_sitter#parse()
+
+  " Get the current syntax tree
+  let tree = tree_sitter#get_tree()
+
+  " Get the current syntax node at the cursor position
+  let node = tree_sitter#node_at_row_column(tree, line_num, virtcol("."))
+
+  " Get the start and end positions of the current syntax node
+  let start_pos = tree_sitter#node_start_position(tree, node)
+  let end_pos = tree_sitter#node_end_position(tree, node)
+
+  " Convert the start and end positions to line and column numbers
+  let start_line = tree_sitter#row_of_position(tree, start_pos)
+  let start_col = tree_sitter#column_of_position(tree, start_pos)
+  let end_line = tree_sitter#row_of_position(tree, end_pos)
+  let end_col = tree_sitter#column_of_position(tree, end_pos)
+
+  " Highlight the scope with a 1px violet border
+  highlight ScopeBorder guibg=NONE guifg=NONE ctermbg=NONE ctermfg=NONE
+  exe "match ScopeBorder /\\%".start_line."l\\%".start_col."v\\_.\\%".end_line."l\\%".end_col."v/"
+endfunction
+
