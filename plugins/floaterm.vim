@@ -6,8 +6,18 @@ let g:floaterm_keymap_next   = '<F2>'
 let g:floaterm_keymap_toggle  = '<C-space>'
 let g:floaterm_keymap_prev   = '<F3>'
 let g:floaterm_keymap_new    = '<F4>'
+let g:floaterm_keymap_kill = '<F1>'
 "nnoremap <F1> :call CloseNerdTreeAndOpenTerminal()<CR>
-tnoremap <silent> <F1> <C-\><C-n>:FloatermToggle<CR>
+"tnoremap <silent> <F1> <C-\><C-n>:FloatermToggle<CR>
+nnoremap <silent> <F5> :FloatermKill<CR>
+tnoremap <silent> <F5> <C-\><C-n>:FloatermKill<CR>
+nnoremap <silent> <C-space> :call CloseNerdTreeAndOpenTerminal()<cr>
+
+
+function! CloseNerdTreeAndOpenTerminal()
+call ClearHighlight()
+call timer_start(50, {tid -> feedkeys( ":FloatermToggle\<cr>" ) })
+endfunction
 
 
 

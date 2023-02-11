@@ -1,14 +1,38 @@
 Plug 'mcchrish/nnn.vim'
 
+function! SwitchFileOrOpen(lines)
+      let file = a:lines[-1]
+      try
+            :execute "sbuffer".file
+      catch
+            :execute "edit".file
+      endtry
+endfunction
+
+
 let g:nnn#set_default_mappings = 0
 
 " Set custom mappings
-nnoremap <silent> <leader>n :call nnn#pick(expand('%p:h'))<CR>
+
+" create an empty function
+function! ClearHighlightAndOpenTree()
+      call ClearHighlight()
+      call timer_start(50, {tid -> feedkeys( ":call nnn#pick(expand('%p:h'))\<cr>" ) })
+      ":call feedkeys( "call nnn#pick(expand('%p:h'))\<cr>" )
+      ":call sneak#cancel()    
+      "wait for 0.2 seconds
+      "call nnn#pick(expand('%p:h'))
+endfunction
+
+
+"nnoremap <silent> <leader>n :call ClearHighlight()<cr> <bar> :call nnn#pick(expand('%p:h'))<CR>
+nnoremap <silent> <leader>n :call ClearHighlightAndOpenTree()<cr>
 nnoremap <silent> <leader>N :NnnPicker<CR>
 let g:nnn#layout = { 'left': '~30%' }
 let g:nnn#action = {
-      \ '<c-j>': 'split',
-      \ '<c-k>': 'vsplit' }
+      \ '<c-j>': function('SwitchFileOrOpen'),
+      \ '<c-k>': 'vsplit',
+      \}
 
 
 

@@ -1,6 +1,35 @@
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'rodrigore/coc-tailwind-intellisense', {'do': 'npm install'}
 Plug 'antoinemadec/coc-fzf'
 
+au FileType html let b:coc_root_patterns = ['.git']
+autocmd FileType python let b:coc_root_patterns = ['.git']
+
+"'commit': 'bdf75abf2d892ceaa6f0f56c15a388ec31236ad2'
+
+
+
+function! FileRefFunc(path)
+  echom a:path
+      try
+            :execute "sbuffer ".a:path
+      catch
+            :execute "edit ".a:path
+      endtry
+endfunction
+
+
+:command -nargs=1 OpenRedit :call FileRefFunc("<args>")
+" let g:coc_user_config = {}
+
+"let g:coc_user_config['coc.preferences.jumpCommand'] = ':OpenRedit'
+
+augroup JsonToJsonc
+    autocmd! FileType json set filetype=jsonc
+augroup END
+
+"    \ 'coc-pairs',
+"let b:coc_pairs_disabled = [">", "<"]
 let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-diagnostic',
@@ -9,24 +38,46 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \ 'coc-html',
     \ 'coc-json',
-    \ 'coc-pairs',
     \ 'coc-sh',
+    "\ 'coc-tabnine',
     \ 'coc-jedi',
     \ 'coc-snippets',
     \ 'coc-svg',
-    \ 'https://github.com/rodrigore/coc-tailwind-intellisense',
     \ 'coc-tsserver',
     \ '@yaegassy/coc-volar',
-\ ]
-let b:coc_pairs_disabled = [">", "<"]
+    \ ]
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
+let g:copilot_no_tab_map = v:true
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
+      \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <S-TAB>
+      \ coc#pum#visible() ? coc#pum#prev(1):
+      \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
+      \ check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+
+
+
+
+
+
+" imap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+
+"imap <expr><S-TAB> pumvisible()? "\<C-p>" : "\<C-h>"
+
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -35,7 +86,7 @@ endfunction
 
 
  " Use leader c to trigger completion.
-inoremap <silent><expr> <leader>gi coc#refresh()
+inoremap <silent><expr> <C-space> coc#refresh()
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
@@ -80,8 +131,11 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
+let g:coc_disable_transparent_cursor = 1
+
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -122,7 +176,16 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 if (index(['vim','help'], &filetype) >= 0)
 execute 'h '.expand('<cword>')
 else
-call CocAction('doHover')
+call CocAction('definitionHover')
 endif
 :endfunction
 nnoremap <leader>i :call Show_documentation()<CR>
+inoremap ,d <esc>:call Show_documentation()<CR>
+
+autocmd FileType scss setl iskeyword+=@
+autocmd FileType scss setl iskeyword+=$
+autocmd FileType scss setl iskeyword+=-
+
+autocmd FileType css setl iskeyword+=@
+autocmd FileType css setl iskeyword+=$
+autocmd FileType css setl iskeyword+=-

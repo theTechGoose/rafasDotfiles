@@ -1,4 +1,14 @@
 Plug 'vim-test/vim-test'
+"Plug 'neomake/neomake'
+"let g:test#strategy = 'neomake'
+let test#strategy = "dispatch"
+" let g:test#basic#start_normal = 1
+" let g:test#preserve_screen = 1
+nnoremap <leader>tn :TestNearest --forceExit<CR>
+nnoremap <leader>ts :TestSuite --forceExit<CR>
+nnoremap <leader>tl :TestLast --forceExit<CR>
+nnoremap <leader>tv :TestVisit<CR>
+noremap <leader>td :exec '! npx jest '.expand("%")<CR>
 
 function! Test(cmd) abort 
     let l:credsPath = FindPackgeJson()
@@ -7,13 +17,14 @@ function! Test(cmd) abort
 				echom l:oCmd
 				return l:oCmd
 		endif
-		echom 'no command added'.l:credsPath
+    echom 'No credentials found'
+    echom a:cmd
     return a:cmd
 endfunction
 
 
 function SetPath(path) 
-    let g:path = a:path
+    let g:path = a:path 
 endfunction
 
 function FindPackgeJson()
@@ -36,10 +47,11 @@ endtry
 endfunction
 
 let g:test#javascript#runner = 'jest'
+"let g:test#javascript#jest#options = '--reporters jest-vim-reporter'
 let g:test#custom_transformations = {'testy': function('Test')}
 let g:test#transformation = 'testy'
 
-nmap <leader>tf :TestFile<CR>
+nmap <silent> <leader>tf :TestFile<CR><CR>
 " nmap <leader>tn :TestNearest<CR>
 " nmap <leader>ts :TestSuite<CR>
 " nmap <leader>tl :TestLast<CR>

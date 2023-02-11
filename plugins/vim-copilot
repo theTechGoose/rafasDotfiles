@@ -1,1 +1,2 @@
 Plug 'github/copilot.vim'
+highlight CopilotSuggestion guifg=#009786 ctermfg=8

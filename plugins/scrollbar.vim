@@ -1,0 +1,3 @@
+Plug 'petertriho/nvim-scrollbar'
+
+

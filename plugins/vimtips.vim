@@ -1,0 +1,1 @@
+Plug 'openuado/vimtips-fortune'

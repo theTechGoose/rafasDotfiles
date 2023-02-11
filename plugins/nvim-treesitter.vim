@@ -2,6 +2,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'windwp/nvim-ts-autotag'
 Plug 'lewis6991/spellsitter.nvim'
 Plug 'theHamsta/nvim-treesitter-pairs'
+Plug 'p00f/nvim-ts-rainbow'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 :let g:is_open = 0
 :function TriggerSelection()
@@ -21,4 +23,4 @@ Plug 'theHamsta/nvim-treesitter-pairs'
 "Plug 'luochen1990/rainbow'
 "Plug 'junegunn/rainbow_parentheses.vim'
 " wPlug 'p00f/nvim-ts-rainbow'
-Plug 'ChristianChiarulli/nvim-ts-rainbow'
+"Plug 'ChristianChiarulli/nvim-ts-rainbow'
